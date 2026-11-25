@@ -1,0 +1,2658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>EOP Meeting 12 (Week 13) Capstone: KopiKita Oat Latte Pitch &amp; Q&amp;A Defense</title>
+  <style>
+    :root {
+      --bg-dark: #050814;
+      --panel-bg: rgba(10, 16, 32, 0.94);
+      --panel-border: rgba(212, 175, 55, 0.55);
+      --gold-bright: #fbbf24;
+      --gold-accent: #d4af37;
+      --blue-accent: #1d4ed8;
+      --blue-glow: #60a5fa;
+      --emerald-green: #10b981;
+      --crimson-red: #ef4444;
+      --purple-accent: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      background-color: #02040a;
+      font-family: var(--font-family);
+      color: var(--text-main);
+      overflow: hidden;
+      position: fixed;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #vn-viewport {
+      position: relative;
+      width: 100vw;
+      width: 100dvw;
+      height: 100vh;
+      height: 100dvh;
+      max-width: 100vw;
+      max-height: 100dvh;
+      background: #000;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.95);
+      display: flex;
+      flex-direction: column;
+    }
+
+    #orientation-helper {
+      display: none;
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.94);
+      border: 1px solid var(--gold-accent);
+      color: var(--gold-bright);
+      padding: 4px 14px;
+      border-radius: 18px;
+      font-size: 10.5px;
+      font-weight: 800;
+      z-index: 220;
+      pointer-events: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.85);
+      animation: pulseAdvance 1.5s infinite alternate;
+      letter-spacing: 0.5px;
+    }
+
+    @media (orientation: portrait) {
+      #orientation-helper {
+        display: block;
+      }
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    #rpg-fade-overlay {
+      position: absolute;
+      inset: 0;
+      background-color: #000;
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease-in-out;
+    }
+
+    #rpg-fade-overlay.blackout {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* FLOATING TOP HUD */
+    .top-floating-hud {
+      position: absolute;
+      top: clamp(4px, 1.5dvh, 8px);
+      left: clamp(6px, 1.5vw, 12px);
+      right: clamp(6px, 1.5vw, 12px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 150;
+      pointer-events: none;
+    }
+
+    .hud-left, .hud-right {
+      display: flex;
+      gap: 6px;
+      pointer-events: auto;
+    }
+
+    .hud-badge {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      padding: 3px 10px;
+      border-radius: 16px;
+      font-size: clamp(9px, 1.6vw, 10.5px);
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: var(--gold-accent);
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 52vw;
+    }
+
+    .btn-hud-pill {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--panel-border);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 16px;
+      font-size: clamp(9px, 1.6vw, 10.5px);
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-hud-pill:hover, .btn-hud-pill:active {
+      background: var(--blue-accent);
+      border-color: #fff;
+    }
+
+    /* 0. SPLASH SCREEN */
+    #screen-splash {
+      background: radial-gradient(circle at center, #1e3a8a 0%, #050814 100%);
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      padding: 12px;
+    }
+
+    .splash-box {
+      border: 2px solid var(--gold-accent);
+      padding: clamp(16px, 4vw, 28px) clamp(14px, 4vw, 36px);
+      border-radius: 16px;
+      background: var(--panel-bg);
+      box-shadow: 0 0 35px rgba(212, 175, 55, 0.35);
+      backdrop-filter: blur(14px);
+      max-width: min(92%, 600px);
+      width: 100%;
+    }
+
+    /* 1. TITLE SCREEN */
+    #screen-title {
+      background-size: cover;
+      background-position: center center;
+      background-image: url('images/title_screen_rayearth.webp');
+      background-color: #070d1e;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 12px clamp(12px, 5vw, 40px);
+    }
+
+    .title-content-card {
+      background: rgba(7, 13, 30, 0.93);
+      border: 1.5px solid var(--panel-border);
+      border-radius: 14px;
+      padding: clamp(14px, 3vw, 24px) clamp(14px, 3.5vw, 28px);
+      max-width: min(94%, 540px);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+    }
+
+    .title-tag {
+      font-size: clamp(8.5px, 1.8vw, 10px);
+      font-weight: 800;
+      color: var(--gold-bright);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .title-h1 {
+      font-size: clamp(17px, 3.8vw, 24px);
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      line-height: 1.25;
+      margin-bottom: 6px;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .title-sub {
+      font-size: clamp(10px, 2.2vw, 11.5px);
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+
+    .btn-main-gold {
+      background: linear-gradient(180deg, #fbbf24 0%, #b45309 100%);
+      color: #050814;
+      border: 1.5px solid #fde68a;
+      padding: clamp(7px, 1.8dvh, 10px) clamp(14px, 3vw, 22px);
+      border-radius: 22px;
+      font-size: clamp(10.5px, 2.2vw, 12px);
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+      transition: all 0.15s;
+    }
+
+    .btn-main-gold:hover, .btn-main-gold:active {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.65);
+      color: #000;
+    }
+
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      color: #cbd5e1;
+      padding: clamp(7px, 1.8dvh, 10px) clamp(14px, 3vw, 22px);
+      border-radius: 22px;
+      font-size: clamp(10.5px, 2.2vw, 12px);
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-secondary:hover, .btn-secondary:active {
+      border-color: var(--gold-accent);
+      color: #fff;
+    }
+
+    /* 2. REGISTRATION SCREEN */
+    #screen-register {
+      background: #050814;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .reg-card {
+      display: grid;
+      grid-template-columns: minmax(110px, 145px) 1fr;
+      gap: 14px;
+      background: var(--panel-bg);
+      border: 1.5px solid var(--panel-border);
+      border-radius: 14px;
+      padding: 16px;
+      max-width: min(95%, 700px);
+      max-height: calc(100dvh - 30px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      width: 100%;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85);
+    }
+
+    @media (max-width: 520px) {
+      .reg-card {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 10px;
+      }
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(255, 255, 255, 0.18);
+      color: #fff;
+      padding: 7px 10px;
+      border-radius: 7px;
+      font-size: 12px;
+      outline: none;
+      margin-bottom: 9px;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold-accent);
+    }
+
+    /* 3. DIRECTORY HUB */
+    #screen-hub {
+      background-size: cover;
+      background-position: center;
+      background-image: url('images/bg_office_day.webp');
+      justify-content: space-between;
+      padding: clamp(34px, 7dvh, 44px) 12px 10px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .hub-header {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      padding: 6px 14px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      margin-bottom: 6px;
+    }
+
+    .hub-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: auto 0;
+      width: 100%;
+    }
+
+    @media (max-width: 740px) {
+      .hub-menu-grid {
+        grid-template-columns: 1fr 1fr;
+        max-height: calc(100dvh - 125px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+
+    .hub-card {
+      background: var(--panel-bg);
+      border: 1.5px solid rgba(255, 255, 255, 0.16);
+      border-radius: 11px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: clamp(115px, 23dvh, 175px);
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .hub-card:hover:not(.locked), .hub-card:active:not(.locked) {
+      border-color: var(--gold-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+    }
+
+    .hub-card.locked {
+      opacity: 0.55;
+      cursor: not-allowed;
+      filter: grayscale(0.6);
+    }
+
+    /* 4. ACTIVE VISUAL NOVEL STAGE */
+    #screen-game {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .bg-layer {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: 1;
+      transition: background-image 0.4s ease;
+    }
+
+    /* CENTERED NON-OVERLAPPING GARR REYNOLDS STAGE PROJECTOR */
+    #stage-projector-frame {
+      position: absolute;
+      top: clamp(32px, 6.2dvh, 46px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: clamp(285px, 47vw, 570px);
+      background: rgba(5, 10, 24, 0.96);
+      border: 2px solid var(--gold-accent);
+      border-radius: 10px;
+      box-shadow: 0 12px 38px rgba(0, 0, 0, 0.95);
+      z-index: 6;
+      overflow: hidden;
+      display: none;
+      padding: 8px 12px 10px;
+      animation: modalPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .stage-card-header {
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      color: var(--gold-bright);
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .step-tag-badge {
+      background: linear-gradient(90deg, #1d4ed8, #2563eb);
+      color: #fff;
+      border: 1px solid #93c5fd;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 8.5px;
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      white-space: nowrap;
+    }
+
+    .step-tag-badge.m10 { background: linear-gradient(90deg, #047857, #10b981); border-color: #6ee7b7; color: #022c22; }
+    .step-tag-badge.m11 { background: linear-gradient(90deg, #1d4ed8, #3b82f6); border-color: #93c5fd; color: #fff; }
+    .step-tag-badge.m12 { background: linear-gradient(90deg, #b45309, #f59e0b); border-color: #fde68a; color: #050814; }
+    .step-tag-badge.qa  { background: linear-gradient(90deg, #7e22ce, #a855f7); border-color: #e9d5ff; color: #fff; }
+
+    /* GARR REYNOLDS 16:9 MINIMALIST BILLBOARD SLIDE */
+    .gr-slide-canvas {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border: 1.5px solid rgba(251, 191, 36, 0.45);
+      border-radius: 8px;
+      padding: 10px 14px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 118px;
+    }
+
+    .gr-slide-kicker {
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      color: var(--gold-bright);
+      text-transform: uppercase;
+    }
+
+    .gr-slide-headline {
+      font-size: clamp(14px, 2.3vw, 18px);
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.2;
+      margin: 4px 0;
+      letter-spacing: -0.2px;
+    }
+
+    .gr-slide-sub {
+      font-size: clamp(10.5px, 1.7vw, 12px);
+      color: #cbd5e1;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .gr-slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      padding-top: 4px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.14);
+      font-size: 8.5px;
+      color: #94a3b8;
+    }
+
+    .gr-word-pill {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid #34d399;
+      color: #6ee7b7;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-weight: 800;
+    }
+
+    .step-pill {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 800;
+      margin: 2px 2px 2px 0;
+      background: rgba(30, 58, 138, 0.65);
+      border: 1px solid rgba(96, 165, 250, 0.45);
+      color: #93c5fd;
+    }
+
+    .step-pill.active-step {
+      background: linear-gradient(90deg, #d97706, #fbbf24);
+      color: #050814;
+      border-color: #fff;
+    }
+
+    .step-pill.done-step {
+      background: rgba(16, 185, 129, 0.25);
+      border-color: #34d399;
+      color: #6ee7b7;
+    }
+
+    @keyframes modalPop {
+      from { transform: translateX(-50%) scale(0.94); opacity: 0; }
+      to { transform: translateX(-50%) scale(1); opacity: 1; }
+    }
+
+    /* SPRITE STAGE (OUTER EDGES SO PROJECTOR IS NEVER BLOCKED) */
+    .sprite-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0;
+      pointer-events: none;
+    }
+
+    .character-sprite {
+      position: absolute;
+      bottom: 0;
+      height: 74%;
+      max-height: 76dvh;
+      width: auto;
+      aspect-ratio: 1792 / 2400;
+      object-fit: contain;
+      transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
+      filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.85));
+    }
+
+    .character-sprite.left {
+      left: -2.5%;
+      object-position: bottom left;
+    }
+
+    .character-sprite.right {
+      right: -2.5%;
+      object-position: bottom right;
+    }
+
+    @media (orientation: portrait) {
+      .character-sprite {
+        height: 48%;
+        max-height: 50dvh;
+      }
+      #stage-projector-frame {
+        width: 90vw;
+        top: 34px;
+      }
+    }
+
+    .character-sprite.active {
+      filter: brightness(1.02) drop-shadow(0 0 14px rgba(212, 175, 55, 0.5));
+      transform: scale(1.0);
+      opacity: 1;
+    }
+
+    .character-sprite.inactive {
+      filter: brightness(0.48);
+      transform: scale(0.96);
+      opacity: 0.78;
+    }
+
+    .character-sprite.hidden {
+      display: none !important;
+      opacity: 0;
+    }
+
+    /* BOTTOM DIALOGUE & CHOICE DRAWER */
+    #vn-dialogue-card {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      min-height: 84px;
+      max-height: 46dvh;
+      height: auto;
+      background: linear-gradient(180deg, rgba(10, 16, 32, 0.96) 0%, rgba(3, 7, 18, 0.99) 100%);
+      border-top: 2.5px solid var(--gold-accent);
+      box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.88);
+      z-index: 20;
+      display: grid;
+      grid-template-columns: 1fr minmax(210px, 370px);
+      gap: 10px;
+      padding: 7px 14px 9px;
+    }
+
+    #vn-dialogue-card.single-pane {
+      grid-template-columns: 1fr;
+    }
+
+    .dialogue-main {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      min-height: 56px;
+    }
+
+    .speaker-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3px;
+      gap: 6px;
+    }
+
+    .speaker-left-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .speaker-name-plate {
+      display: inline-block;
+      background: linear-gradient(90deg, #b45309 0%, #d4af37 100%);
+      color: #050814;
+      font-size: 9.5px;
+      font-weight: 900;
+      padding: 2px 9px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+    }
+
+    .dialogue-text {
+      font-size: clamp(11.5px, 2.2vw, 13.5px);
+      line-height: 1.42;
+      color: #f8fafc;
+      font-weight: 500;
+    }
+
+    .dialogue-footer-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .btn-mini-nav {
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      color: #e2e8f0;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-mini-nav:hover {
+      background: var(--blue-accent);
+      color: #fff;
+    }
+
+    .dialogue-prompt {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: var(--gold-accent);
+      letter-spacing: 0.8px;
+      animation: pulseAdvance 1.2s infinite alternate;
+    }
+
+    @keyframes pulseAdvance {
+      from { opacity: 0.55; transform: translateX(0); }
+      to { opacity: 1; transform: translateX(4px); }
+    }
+
+    .dialogue-choices {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      justify-content: center;
+      border-left: 1px solid rgba(255, 255, 255, 0.14);
+      padding-left: 8px;
+      max-height: 40dvh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .choice-btn {
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid var(--panel-border);
+      color: #f8fafc;
+      padding: 6px 10px;
+      border-radius: 7px;
+      font-size: clamp(10.5px, 1.8vw, 11.5px);
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1.32;
+    }
+
+    .choice-btn:hover, .choice-btn:active {
+      background: var(--blue-accent);
+      border-color: #fff;
+    }
+
+    .choice-btn.gold-choice {
+      background: linear-gradient(90deg, rgba(180, 83, 9, 0.85), rgba(217, 119, 6, 0.85));
+      border-color: #fde68a;
+      color: #fff;
+      font-weight: 800;
+    }
+
+    @media (max-width: 640px) {
+      #vn-dialogue-card:not(.single-pane) {
+        grid-template-columns: 1fr;
+        max-height: 54dvh;
+      }
+      .dialogue-choices {
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+        padding-left: 0;
+        padding-top: 5px;
+      }
+    }
+
+    /* ACT 2: INTERACTIVE QUIZ CLINIC */
+    .station-overlay-screen {
+      background: #050814;
+      padding: clamp(34px, 6.5dvh, 44px) 10px 10px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .interactive-container {
+      background: var(--panel-bg);
+      border: 1.5px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+      max-height: calc(100dvh - 50px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .quiz-tabs-bar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--panel-border);
+      padding-bottom: 6px;
+    }
+
+    .quiz-part-pill {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(15, 23, 42, 0.8);
+      color: #94a3b8;
+      cursor: pointer;
+    }
+
+    .quiz-part-pill.active {
+      background: linear-gradient(90deg, #b45309, #f59e0b);
+      color: #050814;
+      border-color: #fde68a;
+    }
+
+    .split-view-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.15fr;
+      gap: 12px;
+      margin-top: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .split-view-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+
+    .brief-panel-card {
+      background: rgba(15, 23, 42, 0.88);
+      border: 1.5px solid rgba(59, 130, 246, 0.45);
+      border-radius: 9px;
+      padding: 10px 12px;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .audit-panel-card {
+      background: rgba(15, 23, 42, 0.88);
+      border: 1.5px solid var(--panel-border);
+      border-radius: 9px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: clamp(190px, 30dvh, 270px);
+    }
+
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      font-size: 10px;
+    }
+    .mini-table th, .mini-table td {
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 4px 6px;
+      text-align: left;
+    }
+    .mini-table th {
+      background: rgba(30, 41, 59, 0.95);
+      color: var(--gold-accent);
+    }
+
+    /* ACT 3: MOBILE TELEPROMPTER & ARTIFACT EXPORTER */
+    #screen-teleprompter {
+      background: #050814;
+      padding: clamp(38px, 7dvh, 46px) 12px 12px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      max-height: 100dvh;
+    }
+
+    .cue-card-row {
+      background: var(--panel-bg);
+      border-left: 3.5px solid var(--gold-accent);
+      border-radius: 0 8px 8px 0;
+      padding: 7px 10px;
+      margin-bottom: 6px;
+      display: grid;
+      grid-template-columns: minmax(125px, 24%) 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    @media (max-width: 520px) {
+      .cue-card-row {
+        grid-template-columns: 1fr auto;
+      }
+      .cue-card-row > div:first-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .pause-slash {
+      display: inline-block;
+      color: var(--gold-bright);
+      font-weight: 900;
+      margin: 0 2px;
+      background: rgba(245, 158, 11, 0.18);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      padding: 0 4px;
+      border-radius: 3px;
+      font-family: monospace;
+      font-size: 0.92em;
+    }
+
+    .signpost-stress {
+      color: #60a5fa;
+      font-weight: 800;
+    }
+
+    .limit-highlight {
+      color: #fbbf24;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUDIO CONTROLLERS -->
+  <audio id="audio-bgm" loop preload="auto"></audio>
+  <audio id="audio-voice" preload="auto"></audio>
+
+  <div id="vn-viewport">
+
+    <div id="rpg-fade-overlay"></div>
+    <div id="orientation-helper">🔄 Best in Landscape Mode (Rotate Phone)</div>
+
+    <!-- FLOATING TOP HUD -->
+    <div class="top-floating-hud">
+      <div class="hud-left">
+        <span class="hud-badge" id="hud-location-tag">☕ EOP MEETING 12 (WEEK 13) &bull; CAPSTONE</span>
+      </div>
+      <div class="hud-right">
+        <button class="btn-hud-pill" id="btn-toggle-bgm" onclick="app.toggleBgm()">🎵 BGM: ON</button>
+        <button class="btn-hud-pill" id="btn-return-hub" style="display: none;" onclick="app.returnToHub()">DIRECTORY HUB</button>
+      </div>
+    </div>
+
+    <!-- 0. SPLASH SCREEN -->
+    <div id="screen-splash" class="screen active" onclick="app.initializeExperience()">
+      <div class="splash-box">
+        <span class="title-tag">UNIVERSITAS PANCASILA &bull; EOP MEETING 12 (WEEK 13) CAPSTONE</span>
+        <h1 style="font-size: 22px; font-weight: 900; margin: 10px 0; color: #fff;">
+          KOPIKITA OAT LATTE: FULL PITCH &amp; Q&amp;A DEFENSE
+        </h1>
+        <p style="color: var(--text-muted); font-size: 12px; line-height: 1.55; margin-bottom: 20px;">
+          Sub-CPMK 3.1 Capstone: 5-Slide Garr Reynolds Deck (M10) &bull; Data Prepositions &amp; Hedging (M11) &bull; 5-Step Closing, 4 Clarifying Formulas &amp; Integrity Q&amp;A (M12)
+        </p>
+        <button class="btn-main-gold" onclick="app.initializeExperience()">TOUCH SCREEN OR PRESS ENTER TO COMMENCE</button>
+      </div>
+    </div>
+
+    <!-- 1. TITLE SCREEN -->
+    <div id="screen-title" class="screen">
+      <div class="title-content-card">
+        <div class="title-tag">SUB-CPMK 3.1 CAPSTONE &bull; WEEKS 11–13 UNIFIED</div>
+        <h1 class="title-h1">KOPIKITA OAT LATTE PITCH</h1>
+        <p class="title-sub">
+          Watch Maya &amp; Sinta deliver a complete 5-slide business pitch on the 4-week campus minimarket pilot (180 &rarr; 420 bottles), master 18 closing &amp; Q&amp;A clinic drills, and defend your 30-day expansion trial before Mr. Hendra.
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="btn-main-gold" onclick="app.showRegister()">NEW SESSION</button>
+          <button class="btn-secondary" id="btn-continue-save" onclick="app.loadSavedGame()">CONTINUE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. REGISTRATION SCREEN -->
+    <div id="screen-register" class="screen">
+      <div class="reg-card">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.75); border-radius: 12px; padding: 14px;">
+          <img src="images/char_maya_teleprompter.webp" onerror="this.onerror=null;this.src='images/char_maya_speaking.webp'" style="height: 175px; width: auto; object-fit: contain;" alt="Maya Avatar" />
+          <strong style="font-size: 13px; margin-top: 6px; color: var(--gold-accent);">MAYA (LEAD PRESENTER)</strong>
+          <span style="font-size: 10.5px; color: var(--text-muted); text-align: center;">KopiKita Oat Latte Pilot Team</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <h2 style="font-size: 16px; font-weight: 800; margin-bottom: 4px; color: var(--gold-bright);">PRESENTER CREDENTIALS</h2>
+            <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 12px;">Enter your Name &amp; NIM for Artifact #3.3 Capstone Portfolio export.</p>
+
+            <label style="font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">STUDENT NAME &amp; NIM</label>
+            <input type="text" id="reg-student-name" class="form-input" placeholder="e.g. 4522210001 - Nadia Putri" />
+
+            <label style="font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">COHORT / CLASS GROUP</label>
+            <input type="text" id="reg-student-class" class="form-input" placeholder="e.g. EOP Communication Class A / Week 13" />
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-secondary" style="flex: 1;" onclick="app.quitToTitle()">CANCEL</button>
+            <button class="btn-main-gold" style="flex: 2;" onclick="app.confirmRegistration()">ENTER CAPSTONE STUDIO &gt;&gt;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. DIRECTORY HUB -->
+    <div id="screen-hub" class="screen">
+      <div class="hub-header">
+        <div>
+          <span style="font-size: 10px; font-weight: 800; color: var(--gold-accent); letter-spacing: 1px;">EOP CAPSTONE DIRECTORY &bull; KOPIKITA OAT LATTE</span>
+          <h2 style="font-size: 14.5px; font-weight: 800;" id="hub-candidate-display">PRESENTER: UNVERIFIED</h2>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-hud-pill" onclick="app.saveGameState()">💾 SAVE</button>
+          <button class="btn-hud-pill" onclick="app.quitToTitle()">EXIT</button>
+        </div>
+      </div>
+
+      <div class="hub-menu-grid">
+        <div class="hub-card" id="hub-card-act1" onclick="app.selectLocation('act1')">
+          <div>
+            <div style="font-size: 10px; font-weight: 800; color: #34d399; margin-bottom: 4px;">ACT 1 &bull; GUIDED VN SHOWCASE</div>
+            <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 4px;">5-Slide Pitch &amp; Live Q&amp;A</h3>
+            <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+              Watch Slides 1–5 (M10–M12) beside Maya &amp; Sinta, followed by a live Q&amp;A demo using all 4 Clarifying Formulas.
+            </p>
+          </div>
+          <div style="font-size: 11px; font-weight: 800; color: var(--blue-glow);" id="hub-status-act1">● AUTHORIZED</div>
+        </div>
+
+        <div class="hub-card locked" id="hub-card-act2" onclick="app.selectLocation('act2')">
+          <div>
+            <div style="font-size: 10px; font-weight: 800; color: var(--gold-bright); margin-bottom: 4px;">ACT 2 &bull; 18-QUESTION CLINIC</div>
+            <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 4px;">Closing &amp; Q&amp;A Quiz Clinic</h3>
+            <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+              Part A (10 Qs): 5 Closing Steps. Part B (8 Qs): 4 Q&amp;A Techniques &amp; Integrity Traps on KopiKita data.
+            </p>
+          </div>
+          <div style="font-size: 11px; font-weight: 800; color: #94a3b8;" id="hub-status-act2">🔒 COMPLETE ACT 1</div>
+        </div>
+
+        <div class="hub-card locked" id="hub-card-act3" onclick="app.selectLocation('act3')">
+          <div>
+            <div style="font-size: 10px; font-weight: 800; color: #c084fc; margin-bottom: 4px;">ACT 3 &bull; LIVE BOSS DEFENSE</div>
+            <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 4px;">Mr. Hendra Q&amp;A Defense</h3>
+            <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+              Survive 3 probing Q&amp;A rounds with Regional Sales Manager Mr. Hendra to win 30-day trial approval.
+            </p>
+          </div>
+          <div style="font-size: 11px; font-weight: 800; color: #94a3b8;" id="hub-status-act3">🔒 COMPLETE ACT 2</div>
+        </div>
+
+        <div class="hub-card locked" id="hub-card-prompter" onclick="app.selectLocation('prompter')">
+          <div>
+            <div style="font-size: 10px; font-weight: 800; color: var(--emerald-green); margin-bottom: 4px;">CAPSTONE REWARD</div>
+            <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 4px;">Teleprompter &amp; .DOC Export</h3>
+            <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+              Open your slash-paced Phone Teleprompter Cue-Card and download Artifact #3.3 (.doc) for LMS.
+            </p>
+          </div>
+          <div style="font-size: 11px; font-weight: 800; color: #94a3b8;" id="hub-status-prompter">🔒 CLEAR ACT 3 DEFENSE</div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; background: var(--panel-bg); border: 1px solid var(--panel-border); padding: 8px 16px; border-radius: 10px; flex-wrap: wrap; gap: 6px;">
+        <span style="font-size: 11px; color: var(--text-muted);">Sub-CPMK 3.1 Capstone &bull; Reading from Phone Teleprompter Permitted (Zero Penalty)</span>
+        <span id="hub-progress-indicator" style="font-size: 11px; font-weight: 800; color: var(--gold-accent);">PROGRESS: 0 / 3 ACTS CLEARED</span>
+      </div>
+    </div>
+
+    <!-- 4. ACTIVE VISUAL NOVEL STAGE (ACT 1 & ACT 3) -->
+    <div id="screen-game" class="screen">
+      <div id="game-bg" class="bg-layer" style="background-image: url('images/bg_lecture_hall_podium.webp');"></div>
+
+      <!-- CENTERED NON-OVERLAPPING GARR REYNOLDS SLIDE / STAGE PROJECTOR -->
+      <div id="stage-projector-frame">
+        <div class="stage-card-header">
+          <span id="stage-card-title">KOPIKITA OAT LATTE PITCH</span>
+          <span class="step-tag-badge m10" id="stage-step-badge">MEETING 10: SLIDE 1 HOOK</span>
+        </div>
+        <div class="stage-card-body" id="stage-card-body"></div>
+      </div>
+
+      <!-- OUTER-EDGE CHARACTER SPRITES -->
+      <div class="sprite-stage">
+        <img id="sprite-left" class="character-sprite left active" src="images/char_sinta_smile.webp" onerror="this.onerror=null;this.src='images/char_sinta_explaining.webp'" alt="Left Character" />
+        <img id="sprite-right" class="character-sprite right active" src="images/char_maya_speaking.webp" onerror="this.onerror=null;this.src='images/char_maya_explaining.webp'" alt="Right Character" />
+      </div>
+
+      <!-- BOTTOM DIALOGUE & CHOICE DRAWER -->
+      <div id="vn-dialogue-card" class="single-pane">
+        <div class="dialogue-main" onclick="app.handleDialogueAdvance()">
+          <div>
+            <div class="speaker-row">
+              <div class="speaker-left-group">
+                <span class="speaker-name-plate" id="diag-speaker">MAYA</span>
+                <span class="step-tag-badge m10" id="diag-step-badge">MEETING 10: SLIDE 1 HOOK</span>
+              </div>
+              <span id="diag-beat-counter" style="font-size: 9.5px; font-weight: 800; color: var(--text-muted);">1 / 17</span>
+            </div>
+            <p class="dialogue-text" id="diag-body"></p>
+          </div>
+          <div class="dialogue-footer-bar">
+            <div style="display: flex; gap: 6px; align-items: center;">
+              <button id="btn-prev-beat" class="btn-mini-nav" onclick="event.stopPropagation(); app.handleDialogueBack()">◀ PREV</button>
+              <button id="btn-jump-closing" class="btn-mini-nav" onclick="event.stopPropagation(); app.jumpToClosingInAct1()">⏩ JUMP TO CLOSING</button>
+            </div>
+            <div class="dialogue-prompt" id="diag-prompt">TAP DIALOGUE TO CONTINUE &gt;&gt;</div>
+          </div>
+        </div>
+
+        <div class="dialogue-choices" id="diag-choices-pane"></div>
+      </div>
+    </div>
+
+    <!-- 5. ACT 2: INTERACTIVE CLOSING & Q&A QUIZ CLINIC (18 QUESTIONS) -->
+    <div id="screen-act2-quiz" class="screen station-overlay-screen">
+      <div class="interactive-container">
+        <div class="quiz-tabs-bar">
+          <div>
+            <span class="title-tag">ACT 2 &bull; CLOSING &amp; Q&amp;A MASTERY CLINIC (18 QUESTIONS)</span>
+            <h2 style="font-size: 15.5px; font-weight: 800; color: #fff;" id="quiz-main-heading">Part A: The 5-Step Closing Sequence (10 Questions)</h2>
+          </div>
+          <div style="display: flex; gap: 6px; align-items: center;">
+            <button id="tab-part-a" class="quiz-part-pill active" onclick="app.jumpQuizIndex(0)">PART A: 5 STEPS (1–10)</button>
+            <button id="tab-part-b" class="quiz-part-pill" onclick="app.jumpQuizIndex(10)">PART B: 4 Q&amp;A RULES (11–18)</button>
+            <span id="quiz-score-badge" style="font-size: 11px; font-weight: 900; color: #34d399; background: rgba(16,185,129,0.18); border: 1px solid #10b981; padding: 3px 8px; border-radius: 6px;">SCORE: 0 / 18</span>
+          </div>
+        </div>
+
+        <div class="split-view-grid">
+          <!-- LEFT REFERENCE BRIEF: KOPIKITA OAT LATTE PILOT FACTS -->
+          <div class="brief-panel-card">
+            <strong style="color: var(--gold-bright); font-size: 11.5px; display: block; margin-bottom: 4px;">☕ KOPIKITA OAT LATTE — VERIFIED PILOT BRIEF</strong>
+            <table class="mini-table">
+              <thead>
+                <tr><th>Metric / Item</th><th>Verified Status</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Pilot Scope</strong></td><td>4 weeks across 3 campus-area minimarkets</td></tr>
+                <tr><td><strong>Weekly Sales</strong></td><td>Grew <strong>from</strong> 180 (W1) <strong>to</strong> 420 bottles (W4) (+240 / +133%)</td></tr>
+                <tr><td><strong>Peak Window</strong></td><td>62% of bottle sales occurred between 1:00 PM &amp; 5:00 PM</td></tr>
+                <tr><td><strong>Evidence Limits</strong></td><td>Only 3 stores; no control group (causation unproven)</td></tr>
+                <tr><td><strong>Uncalculated Cost</strong></td><td>Cold-chain delivery cost for 5+ stores NOT yet calculated</td></tr>
+                <tr><td><strong>Proportionate Ask</strong></td><td>30-day trial in 5 campus stores with weekly cost tracking</td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top: 6px; font-size: 10px; color: #93c5fd; background: rgba(30,58,138,0.45); padding: 6px 8px; border-radius: 6px;">
+              <strong>4 Clarifying Formulas:</strong><br/>
+              1. <em>"Do you mean [X] or [Y]?"</em> (vague scope)<br/>
+              2. <em>"If I understand correctly, you are asking about..."</em> (rephrase)<br/>
+              3. <em>"Could you repeat the last part, please?"</em> (buy 3–5s)<br/>
+              4. <em>"I will answer the first part, then the second."</em> (split)
+            </div>
+          </div>
+
+          <!-- RIGHT INTERACTIVE QUESTION CARD -->
+          <div class="audit-panel-card">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span id="quiz-q-counter" style="font-size: 10px; font-weight: 900; color: var(--blue-glow); text-transform: uppercase;">PART A &bull; Q1 / 18 &bull; STEP 1: SIGNAL</span>
+                <span id="quiz-skill-tag" class="step-tag-badge m12">5-STEP CLOSING</span>
+              </div>
+              <p id="quiz-q-text" style="font-size: 13px; font-weight: 700; color: #fff; margin-top: 6px; line-height: 1.42;"></p>
+            </div>
+
+            <div id="quiz-options-pane" style="display: flex; flex-direction: column; gap: 6px; margin: 10px 0;"></div>
+
+            <div id="quiz-feedback" style="font-size: 11px; font-weight: 600; padding: 7px 10px; border-radius: 6px; display: none; line-height: 1.38;"></div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+              <button id="btn-quiz-prev" class="btn-mini-nav" onclick="app.prevQuizQuestion()">◀ PREV Q</button>
+              <button id="btn-quiz-next" class="btn-main-gold" style="padding: 5px 15px; font-size: 11px; display: none;" onclick="app.advanceQuizQuestion()">NEXT QUESTION &gt;&gt;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. ACT 3 REWARD: MOBILE TELEPROMPTER & ARTIFACT #3.3 EXPORTER -->
+    <div id="screen-teleprompter" class="screen">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+        <div>
+          <span class="title-tag">SUB-CPMK 3.1 CAPSTONE &bull; PHONE TELEPROMPTER &amp; PORTFOLIO</span>
+          <h2 style="font-size: 16.5px; font-weight: 800;">KopiKita Oat Latte: 5-Step Closing Cue-Card &amp; Artifact #3.3</h2>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="btn-main-gold" style="padding: 5px 14px; font-size: 11.5px;" onclick="app.exportArtifactDoc()">📄 EXPORT ARTIFACT #3.3 (.DOC)</button>
+          <button class="btn-hud-pill" onclick="app.returnToHub()">DIRECTORY HUB</button>
+        </div>
+      </div>
+
+      <div style="background: rgba(30, 58, 138, 0.38); border: 1.5px solid var(--panel-border); border-radius: 8px; padding: 6px 12px; margin-bottom: 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;">
+        <span><strong>DELIVERY RULE:</strong> Pause 1 second at each <span class="pause-slash">/</span> breath mark. Projected Slide 5 holds &le;15 words; reading from your phone is 100% permitted (zero penalty).</span>
+        <span style="color: var(--gold-accent); font-weight: 800;">54 WORDS &bull; ~35 SECONDS</span>
+      </div>
+
+      <div id="teleprompter-card-list">
+        <div class="cue-card-row">
+          <div><strong style="color: var(--gold-accent); font-size: 11.5px;">1. SIGNAL</strong><br><small style="color: var(--text-muted);">Signpost the End</small></div>
+          <div style="font-size: 12.5px;"><span class="signpost-stress">"To conclude,</span> <span class="pause-slash">/</span></div>
+          <button class="btn-hud-pill" onclick="app.playModelClosing(1)">🔊 LISTEN</button>
+        </div>
+
+        <div class="cue-card-row">
+          <div><strong style="color: var(--gold-accent); font-size: 11.5px;">2. SUMMARIZE</strong><br><small style="color: var(--text-muted);">Core Pilot Finding</small></div>
+          <div style="font-size: 12.5px;">KopiKita Oat Latte grew <span class="signpost-stress">from 180 to 420 bottles</span> <span class="pause-slash">/</span> across three campus stores, <span class="pause-slash">/</span> peaking in the afternoon. <span class="pause-slash">/</span></div>
+          <button class="btn-hud-pill" onclick="app.playModelClosing(2)">🔊 LISTEN</button>
+        </div>
+
+        <div class="cue-card-row">
+          <div><strong style="color: var(--gold-accent); font-size: 11.5px;">3. CONNECT</strong><br><small style="color: var(--text-muted);">Audience Value</small></div>
+          <div style="font-size: 12.5px;">This shows strong <span class="signpost-stress">afternoon campus demand</span> <span class="pause-slash">/</span> for our regional retail portfolio. <span class="pause-slash">/</span></div>
+          <button class="btn-hud-pill" onclick="app.playModelClosing(3)">🔊 LISTEN</button>
+        </div>
+
+        <div class="cue-card-row">
+          <div><strong style="color: var(--gold-accent); font-size: 11.5px;">4. ACTION &amp; LIMIT</strong><br><small style="color: var(--text-muted);">Trial + Honest Limit</small></div>
+          <div style="font-size: 12.5px;">I recommend a <span class="signpost-stress">30-day trial in five campus stores,</span> <span class="pause-slash">/</span> tracking weekly stock and cold-chain delivery costs. <span class="pause-slash">/</span> <span class="limit-highlight">We have not yet tested a control group or calculated five-store delivery costs.</span> <span class="pause-slash">/</span></div>
+          <button class="btn-hud-pill" onclick="app.playModelClosing(4)">🔊 LISTEN</button>
+        </div>
+
+        <div class="cue-card-row">
+          <div><strong style="color: var(--gold-accent); font-size: 11.5px;">5. INVITE Q&amp;A</strong><br><small style="color: var(--text-muted);">Open the Floor</small></div>
+          <div style="font-size: 12.5px;"><span class="signpost-stress">Thank you.</span> <span class="pause-slash">/</span> <span class="signpost-stress">I welcome your questions."</span></div>
+          <button class="btn-hud-pill" onclick="app.playModelClosing(5)">🔊 LISTEN</button>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.92); border: 1px solid rgba(96, 165, 250, 0.45); border-radius: 8px; padding: 8px 12px; margin-top: 8px; font-size: 11px; line-height: 1.45;">
+          <strong style="color: var(--blue-glow); display: block; margin-bottom: 3px;">⚡ QUICK Q&amp;A EMERGENCY POCKET PHRASES (KEEP ON PHONE):</strong>
+          <span style="color: #e2e8f0;">
+            &bull; <strong>Vague Scope:</strong> "Do you mean afternoon peak demand or total weekly volume?"<br/>
+            &bull; <strong>Rephrase Skepticism:</strong> "If I understand correctly, you are asking about cold-chain delivery feasibility..."<br/>
+            &bull; <strong>Buy 3–5 Seconds:</strong> "Could you repeat the last part, please?" &nbsp;|&nbsp; <strong>Split Two-Part:</strong> "I will answer the first part, then the second."
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ========================================================================
+       EOP MEETING 12 (WEEK 13) CAPSTONE ENGINE: KOPIKITA OAT LATTE PITCH
+       Unifying Meeting 10 (Slides 1-3), Meeting 11 (Slide 4), & Meeting 12 (Slide 5 + Q&A)
+       ======================================================================== */
+    const app = {
+      isBgmEnabled: true,
+      currentBgmTrack: '',
+      studentProfile: { name: '', classId: '' },
+      unlockedStates: { act1Cleared: false, act2Cleared: false, act3Cleared: false },
+
+      scriptIndex: 0,
+      currentMode: 'act1_vn',
+
+      /* ======================================================================
+         ACT 1: COMPLETE 5-SLIDE PRESENTATION SHOWCASE + LIVE Q&A DEMO (17 BEATS)
+         ====================================================================== */
+      act1Script: [
+        /* --- MEETING 10: SLIDES 1–3 (GARR REYNOLDS + SIGNPOSTS) --- */
+        {
+          speaker: "Sinta",
+          stepTag: "MEETING 10: SLIDE 1 HOOK",
+          badgeClass: "m10",
+          spriteLeft: "images/char_sinta_smile.webp",
+          spriteRight: "images/char_maya_speaking.webp",
+          activeSide: "left",
+          cardTitle: "SLIDE 1 OF 5 • HOOK & PURPOSE (GARR REYNOLDS)",
+          cardHtml: `
+            <div class="gr-slide-canvas">
+              <div class="gr-slide-kicker">KOPIKITA OAT LATTE &bull; CAMPUS PILOT REVIEW</div>
+              <div class="gr-slide-headline">Capturing Afternoon Campus Coffee Demand</div>
+              <div class="gr-slide-sub">4-Week Minimarket Pilot &amp; 5-Store Expansion Proposal</div>
+              <div class="gr-slide-footer">
+                <span>Visual Anchor: Title + Core Goal Only</span>
+                <span class="gr-word-pill">13 WORDS (&le;15 RULE)</span>
+              </div>
+            </div>
+          `,
+          text: "Welcome to our Capstone rehearsal! Remember Meeting 10: Garr Reynolds' No-Slideument Rule keeps every projected slide at 15 words or fewer, while Maya delivers the full narrative using signposts. Ready, Maya?"
+        },
+        {
+          speaker: "Maya",
+          stepTag: "MEETING 10: SLIDE 1 HOOK",
+          badgeClass: "m10",
+          spriteLeft: "images/char_sinta_smile.webp",
+          spriteRight: "images/char_maya_speaking.webp",
+          activeSide: "right",
+          cardTitle: "SLIDE 1 OF 5 • HOOK & PURPOSE (13 WORDS)",
+          cardHtml: `
+            <div class="gr-slide-canvas">
+              <div class="gr-slide-kicker">KOPIKITA OAT LATTE &bull; CAMPUS PILOT REVIEW</div>
+              <div class="gr-slide-headline">Capturing Afternoon Campus Coffee Demand</div>
+              <div class="gr-slide-sub">4-Week Minimarket Pilot &amp; 5-Store Expansion Proposal</div>
+              <div class="gr-slide-footer">
+                <span>Signpost: "Good morning. Today I am presenting..."</span>
+                <span class="gr-word-pill">13 WORDS (&le;15 RULE)</span>
+              </div>
+            </div>
+          `,
+          text: "\"Good morning, Mr. Hendra. Today, I am presenting our 4-week KopiKita Oat Latte pilot results across three campus minimarkets—and proposing a measured 30-day expansion trial.\""
+        },
+        {
+          speaker: "Maya",
+          stepTag: "MEETING 10: SLIDE 2 PROBLEM",
+          badgeClass: "m10",
+          spriteLeft: "images/char_sinta_explaining.webp",
+          spriteRight: "images/char_maya_explaining.webp",
+          activeSide: "right",
+          cardTitle: "SLIDE 2 OF 5 • PROBLEM / OPPORTUNITY (12 WORDS)",
+          cardHtml: `
+            <div class="gr-slide-canvas">
+              <div class="gr-slide-kicker">THE CAMPUS MARKET OPPORTUNITY</div>
+              <div class="gr-slide-headline">Afternoon Student Demand Remains Underserved</div>
+              <div class="gr-slide-sub">&bull; High 1:00–5:00 PM foot traffic &nbsp;|&nbsp; &bull; Limited chilled oat-milk options</div>
+              <div class="gr-slide-footer">
+                <span>Signpost: "First, let's look at the opportunity..."</span>
+                <span class="gr-word-pill">12 WORDS (&le;15 RULE)</span>
+              </div>
+            </div>
+          `,
+          text: "\"First, let's look at the market opportunity. Campus minimarkets see heavy student foot traffic after lunch, yet chilled ready-to-drink oat lattes were rarely stocked in campus-area outlets.\""
+        },
+        {
+          speaker: "Maya",
+          stepTag: "MEETING 10: SLIDE 3 SOLUTION",
+          badgeClass: "m10",
+          spriteLeft: "images/char_sinta_pointer.webp",
+          spriteRight: "images/char_maya_explaining.webp",
+          activeSide: "right",
+          cardTitle: "SLIDE 3 OF 5 • PROPOSED SOLUTION (11 WORDS)",
+          cardHtml: `
+            <div class="gr-slide-canvas">
+              <div class="gr-slide-kicker">OUR PILOT INTERVENTION</div>
+              <div class="gr-slide-headline">Targeted Chilled Placement in 3 Campus Minimarkets</div>
+              <div class="gr-slide-sub">&bull; Front-cooler eye-level placement &nbsp;|&nbsp; &bull; 4-week weekly stock audit</div>
+              <div class="gr-slide-footer">
+                <span>Signpost: "Moving on to our pilot solution..."</span>
+                <span class="gr-word-pill">11 WORDS (&le;15 RULE)</span>
+              </div>
+            </div>
+          `,
+          text: "\"Moving on to our pilot solution: over the past four weeks, we placed KopiKita Oat Latte in front-row chillers across three campus-area minimarkets and tracked weekly bottle sales.\""
+        },
+
+        /* --- MEETING 11: SLIDE 4 (EXPLAINING DATA + PREPOSITIONS + HEDGING) --- */
+        {
+          speaker: "Maya",
+          stepTag: "MEETING 11: SLIDE 4 DATA",
+          badgeClass: "m11",
+          spriteLeft: "images/char_sinta_pointer.webp",
+          spriteRight: "images/char_maya_explaining.webp",
+          activeSide: "right",
+          cardTitle: "SLIDE 4 OF 5 • 4-WEEK SALES DATA (14 WORDS + SVG CHART)",
+          cardHtml: `
+            <div class="gr-slide-canvas" style="padding: 8px 12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="gr-slide-kicker">4-WEEK PILOT (3 STORES) &bull; 62% SOLD 1–5 PM</span>
+                <span class="gr-word-pill">14 WORDS</span>
+              </div>
+              <div class="gr-slide-headline" style="font-size:14px; margin:2px 0;">Weekly Sales Grew From 180 to 420 Bottles (+133%)</div>
+              <svg viewBox="0 0 360 78" style="width:100%; height:72px; background:rgba(2,6,23,0.65); border-radius:6px; border:1px solid rgba(96,165,250,0.3);">
+                <line x1="35" y1="62" x2="335" y2="62" stroke="#475569" stroke-width="1"/>
+                <line x1="35" y1="14" x2="35" y2="62" stroke="#475569" stroke-width="1"/>
+                <polyline fill="none" stroke="#fbbf24" stroke-width="3" points="65,52 145,42 225,28 305,15"/>
+                <circle cx="65" cy="52" r="4" fill="#60a5fa"/><text x="65" y="45" fill="#f8fafc" font-size="9" font-weight="bold" text-anchor="middle">180</text>
+                <circle cx="145" cy="42" r="4" fill="#60a5fa"/><text x="145" y="35" fill="#f8fafc" font-size="9" font-weight="bold" text-anchor="middle">240</text>
+                <circle cx="225" cy="28" r="4" fill="#60a5fa"/><text x="225" y="21" fill="#f8fafc" font-size="9" font-weight="bold" text-anchor="middle">330</text>
+                <circle cx="305" cy="15" r="4.5" fill="#10b981"/><text x="305" y="10" fill="#34d399" font-size="9.5" font-weight="bold" text-anchor="middle">420</text>
+                <text x="65" y="73" fill="#94a3b8" font-size="8.5" text-anchor="middle">Week 1</text>
+                <text x="145" y="73" fill="#94a3b8" font-size="8.5" text-anchor="middle">Week 2</text>
+                <text x="225" y="73" fill="#94a3b8" font-size="8.5" text-anchor="middle">Week 3</text>
+                <text x="305" y="73" fill="#94a3b8" font-size="8.5" text-anchor="middle">Week 4</text>
+              </svg>
+              <div class="gr-slide-footer" style="margin-top:3px;">
+                <span>Prepositions: FROM 180 TO 420 (increase OF 240)</span>
+                <span style="color:#fbbf24;">No Control Group</span>
+              </div>
+            </div>
+          `,
+          text: "\"As you can see from this line chart, weekly sales grew steadily FROM 180 bottles in Week 1 TO 420 bottles in Week 4—an increase OF 240 bottles, with 62% sold between 1:00 and 5:00 PM. While encouraging, without a control group we cannot prove placement alone caused this rise.\""
+        },
+        {
+          speaker: "Sinta",
+          stepTag: "MEETING 11: SLIDE 4 DATA",
+          badgeClass: "m11",
+          spriteLeft: "images/char_sinta_explaining.webp",
+          spriteRight: "images/char_maya_teleprompter.webp",
+          activeSide: "left",
+          cardTitle: "TRANSITION TO MEETING 12: SLIDE 5 CLOSING",
+          cardHtml: `
+            <div class="gr-slide-canvas">
+              <div class="gr-slide-kicker">MEETING 12 CAPSTONE FOCUS</div>
+              <div class="gr-slide-headline">Slide 5: 5-Step Closing + Mobile Teleprompter</div>
+              <div class="gr-slide-sub">1. Signal &rarr; 2. Summarize &rarr; 3. Connect &rarr; 4. Action &amp; Limit &rarr; 5. Invite</div>
+              <div class="gr-slide-footer">
+                <span>Slide 5 Text: &le;15 words</span>
+                <span class="gr-word-pill">Spoken Script: 54 words (/)</span>
+              </div>
+            </div>
+          `,
+          text: "Nice prepositions ('from', 'to', 'of') and hedging! Now comes Meeting 12: Slide 5 Closing. Watch how Maya keeps Slide 5 under 15 words while reading her 54-word closing script with '/' breath pauses from her phone!"
+        },
+
+        /* --- MEETING 12: SLIDE 5 CLOSING (STEPS 1 TO 5) --- */
+        {
+          speaker: "Maya (Closing)",
+          stepTag: "MEETING 12: STEP 1 SIGNAL",
+          badgeClass: "m12",
+          spriteLeft: "images/char_sinta_smile.webp",
+          spriteRight: "images/char_maya_teleprompter.webp",
+          activeSide: "right",
+          cardTitle: "SLIDE 5 OF 5 • STEP 1: SIGNAL",
+          cardHtml: `
+            <div style="margin-bottom:5px;">
+              <span class="step-pill active-step">1. Signal</span> <span class="step-pill">2. Summarize</span> <span class="step-pill">3. Connect</span> <span class="step-pill">4. Action &amp; Limit</span> <span class="step-pill">5. Invite</span>
+            </div>
+            <div class="gr-slide-canvas">
+              <div class="gr-slide-kicker">NEXT STEP RECOMMENDATION</div>
+              <div class="gr-slide-headline">Approve 30-Day KopiKita Trial in 5 Campus Stores</div>
+              <div class="gr-slide-sub">&bull; Weekly stock audit &nbsp;|&nbsp; &bull; Cold-chain delivery cost tracking</div>
+              <div class="gr-slide-footer">
+                <span>Phone Cue: "To conclude, /" (1s pause)</span>
+                <span class="gr-word-pill">14 WORDS (&le;15 RULE)</span>
+              </div>
+            </div>
+          `,
+          text: "[STEP 1: SIGNAL] \"To conclude, /\" — I pause one full second after 'To conclude' so Mr. Hendra knows we are moving from data into our final recommendation."
+        },
+        {
+          speaker: "Maya (Closing)",
+          stepTag: "MEETING 12: STEP 2 SUMMARIZE",
+          badgeClass: "m12",
+          spriteLeft: "images/char_sinta_smile.webp",
+          spriteRight: "images/char_maya_teleprompter.webp",
+          activeSide: "right",
+          cardTitle: "SLIDE 5 OF 5 • STEP 2: SUMMARIZE",
+          cardHtml: `
+            <div style="margin-bottom:5px;">
+              <span class="step-pill done-step">1. Signal</span> <span class="step-pill active-step">2. Summarize</span> <span class="step-pill">3. Connect</span> <span class="step-pill">4. Action &amp; Limit</span> <span class="step-pill">5. Invite</span>
+            </div>
+            <div class="gr-slide-canvas">
+              <div class="gr-slide-kicker">NEXT STEP RECOMMENDATION</div>
+              <div class="gr-slide-headline">Approve 30-Day KopiKita Trial in 5 Campus Stores</div>
+              <div class="gr-slide-sub">&bull; Weekly stock audit &nbsp;|&nbsp; &bull; Cold-chain delivery cost tracking</div>
+              <div class="gr-slide-footer">
+                <span>Phone Cue: "...grew from 180 to 420 bottles..."</span>
+                <span class="gr-word-pill">14 WORDS (&le;15 RULE)</span>
+              </div>
+            </div>
+          `,
+          text: "[STEP 2: SUMMARIZE] \"...KopiKita Oat Latte grew from 180 to 420 bottles / across three campus stores, / peaking in the afternoon. /\" — One crisp takeaway, without repeating every slide."
+        },
+        {
+          speaker: "Maya (Closing)",
+          stepTag: "MEETING 12: STEP 3 CONNECT",
+          badgeClass: "m12",
+          spriteLeft: "images/char_sinta_smile.webp",
+          spriteRight: "images/char_maya_teleprompter.webp",
+          activeSide: "right",
+          cardTitle: "SLIDE 5 OF 5 • STEP 3: CONNECT",
+          cardHtml: `
+            <div style="margin-bottom:5px;">
+              <span class="step-pill done-step">1. Signal</span> <span class="step-pill done-step">2. Summarize</span> <span class="step-pill active-step">3. Connect</span> <span class="step-pill">4. Action &amp; Limit</span> <span class="step-pill">5. Invite</span>
+            </div>
+            <div class="gr-slide-canvas">
+              <div class="gr-slide-kicker">NEXT STEP RECOMMENDATION</div>
+              <div class="gr-slide-headline">Approve 30-Day KopiKita Trial in 5 Campus Stores</div>
+              <div class="gr-slide-sub">&bull; Weekly stock audit &nbsp;|&nbsp; &bull; Cold-chain delivery cost tracking</div>
+              <div class="gr-slide-footer">
+                <span>Phone Cue: "This shows strong afternoon campus demand..."</span>
+                <span class="gr-word-pill">14 WORDS (&le;15 RULE)</span>
+              </div>
+            </div>
+          `,
+          text: "[STEP 3: CONNECT] \"This shows strong afternoon campus demand / for our regional retail portfolio. /\" — Linking the pilot directly to what the Regional Sales Manager cares about."
+        },
+        {
+          speaker: "Maya (Closing)",
+          stepTag: "MEETING 12: STEP 4 ACTION & LIMIT",
+          badgeClass: "m12",
+          spriteLeft: "images/char_sinta_explaining.webp",
+          spriteRight: "images/char_maya_teleprompter.webp",
+          activeSide: "right",
+          cardTitle: "SLIDE 5 OF 5 • STEP 4: ACTION & HONEST LIMITATION",
+          cardHtml: `
+            <div style="margin-bottom:5px;">
+              <span class="step-pill done-step">1. Signal</span> <span class="step-pill done-step">2. Summarize</span> <span class="step-pill done-step">3. Connect</span> <span class="step-pill active-step">4. Action &amp; Limit</span> <span class="step-pill">5. Invite</span>
+            </div>
+            <div class="gr-slide-canvas">
+              <div class="gr-slide-kicker">PROPORTIONATE ASK + INTEGRITY DISCLOSURE</div>
+              <div class="gr-slide-headline">Approve 30-Day KopiKita Trial in 5 Campus Stores</div>
+              <div class="gr-slide-sub" style="color:#fbbf24;">Honest Limit: No control group yet; 5-store cold-chain cost uncalculated.</div>
+              <div class="gr-slide-footer">
+                <span>Proposes low-risk 5-store trial + cost log</span>
+                <span class="gr-word-pill">14 WORDS (&le;15 RULE)</span>
+              </div>
+            </div>
+          `,
+          text: "[STEP 4: ACTION & LIMITATION] \"I recommend a 30-day trial in five campus stores, / tracking weekly stock and cold-chain delivery costs. / We have not yet tested a control group or calculated five-store delivery costs. /\""
+        },
+        {
+          speaker: "Maya (Closing)",
+          stepTag: "MEETING 12: STEP 5 INVITE",
+          badgeClass: "m12",
+          spriteLeft: "images/char_sinta_smile.webp",
+          spriteRight: "images/char_maya_speaking.webp",
+          activeSide: "right",
+          cardTitle: "SLIDE 5 OF 5 • STEP 5: INVITE Q&A",
+          cardHtml: `
+            <div style="margin-bottom:5px;">
+              <span class="step-pill done-step">1. Signal</span> <span class="step-pill done-step">2. Summarize</span> <span class="step-pill done-step">3. Connect</span> <span class="step-pill done-step">4. Action &amp; Limit</span> <span class="step-pill active-step">5. Invite</span>
+            </div>
+            <div class="gr-slide-canvas">
+              <div class="gr-slide-kicker">FLOOR OPEN FOR QUESTIONS</div>
+              <div class="gr-slide-headline">Approve 30-Day KopiKita Trial in 5 Campus Stores</div>
+              <div class="gr-slide-sub">&bull; Weekly stock audit &nbsp;|&nbsp; &bull; Cold-chain delivery cost tracking</div>
+              <div class="gr-slide-footer">
+                <span>Keep Slide 5 projected during Q&amp;A!</span>
+                <span class="gr-word-pill">54 WORDS TOTAL</span>
+              </div>
+            </div>
+          `,
+          text: "[STEP 5: INVITE Q&A] \"Thank you. / I welcome your questions.\" — Now I hold eye contact and leave Slide 5 visible on screen as Q&A begins!"
+        },
+
+        /* --- LIVE Q&A DEMONSTRATION (4 CLARIFYING FORMULAS + INTEGRITY RULES) --- */
+        {
+          speaker: "Mr. Hendra (Demo)",
+          stepTag: "MEETING 12: LIVE Q&A DEMO",
+          badgeClass: "qa",
+          spriteLeft: "images/char_maya_speaking.webp",
+          spriteRight: "images/char_hendra_probing.webp",
+          activeSide: "right",
+          cardTitle: "LIVE Q&A DEMO 1 • VAGUE SCOPE + TWO-PART QUESTION",
+          cardHtml: `
+            <div style="font-size:11px; line-height:1.45;">
+              <strong style="color:#60a5fa;">Mr. Hendra's Question:</strong> <em>"Is the afternoon performance better, and what is the cold-chain delivery cost for five stores?"</em><br/>
+              <span style="color:#fbbf24;">Traps Detected:</span> (1) Vague word "better", (2) Compound 2-part question, (3) Uncalculated delivery cost!
+            </div>
+          `,
+          text: "\"Interesting pilot, Maya. Two questions: Is the afternoon performance better, and what is the cold-chain delivery cost for five stores?\""
+        },
+        {
+          speaker: "Maya (Demo)",
+          stepTag: "MEETING 12: LIVE Q&A DEMO",
+          badgeClass: "qa",
+          spriteLeft: "images/char_maya_explaining.webp",
+          spriteRight: "images/char_hendra_probing.webp",
+          activeSide: "left",
+          cardTitle: "FORMULAS 1 & 4 + INTEGRITY TRAP 1 IN ACTION",
+          cardHtml: `
+            <div style="font-size:10.5px; line-height:1.42;">
+              &bull; <strong>Formula 4 (Split):</strong> <em>"I will answer the first part, then the second."</em><br/>
+              &bull; <strong>Formula 1 (Clarify):</strong> <em>"Do you mean afternoon share of sales or profit margin per bottle?"</em><br/>
+              &bull; <strong>Integrity Rule 1 (Unknown Cost):</strong> Admit uncalculated 5-store delivery cost + log it weekly during the 30-day trial!
+            </div>
+          `,
+          text: "\"I will answer the first part, then the second. First, by 'better,' do you mean afternoon share of sales or profit margin? In our data, 62% of volume occurred between 1 and 5 PM. Second, we have not yet calculated 5-store cold-chain delivery costs; we will track those exact costs weekly during the 30-day trial.\""
+        },
+        {
+          speaker: "Sinta (Demo)",
+          stepTag: "MEETING 12: LIVE Q&A DEMO",
+          badgeClass: "qa",
+          spriteLeft: "images/char_sinta_pointer.webp",
+          spriteRight: "images/char_maya_speaking.webp",
+          activeSide: "left",
+          cardTitle: "LIVE Q&A DEMO 2 • SKEPTICAL REMARK + STALLING FORMULA",
+          cardHtml: `
+            <div style="font-size:11px; line-height:1.45;">
+              <strong style="color:#f472b6;">Sinta (Playing Skeptical Reviewer):</strong> <em>"Three campus stores is tiny—couldn't exam week or hot weather explain the whole jump, and did management already approve this expansion?"</em>
+            </div>
+          `,
+          text: "\"Let me test you with a tough skeptical question, Maya: 'Three campus stores is tiny—couldn't exam week or hot weather explain the whole jump, and did management already approve this expansion?'\""
+        },
+        {
+          speaker: "Maya (Demo)",
+          stepTag: "MEETING 12: LIVE Q&A DEMO",
+          badgeClass: "qa",
+          spriteLeft: "images/char_sinta_smile.webp",
+          spriteRight: "images/char_maya_explaining.webp",
+          activeSide: "right",
+          cardTitle: "FORMULAS 2 & 3 + INTEGRITY TRAP 2 IN ACTION",
+          cardHtml: `
+            <div style="font-size:10.5px; line-height:1.42;">
+              &bull; <strong>Formula 3 (Stall 3–5s):</strong> <em>"Could you repeat the last part, please?"</em><br/>
+              &bull; <strong>Formula 2 (Rephrase):</strong> <em>"If I understand correctly, you are asking about external factors..."</em><br/>
+              &bull; <strong>Integrity Rule 2 (Assumed Approval):</strong> Clarify approval is pending today's decision!
+            </div>
+          `,
+          text: "\"Could you repeat the last part, please? ... Thank you. If I understand correctly, you are asking whether external factors drove the growth and whether expansion is approved. Without a control group, we cannot rule out weather or exam traffic—and expansion is pending your approval of our 30-day trial today.\""
+        },
+        {
+          speaker: "Sinta",
+          stepTag: "MEETING 12: ACT 1 COMPLETE",
+          badgeClass: "m12",
+          spriteLeft: "images/char_sinta_smile.webp",
+          spriteRight: "images/char_maya_victory.webp",
+          activeSide: "left",
+          cardTitle: "ACT 1 COMPLETE • CHOOSE YOUR NEXT STEP",
+          cardHtml: `
+            <div style="font-size:11px; line-height:1.45;">
+              You have seen the complete <strong>KopiKita Oat Latte</strong> 5-slide pitch (Meetings 10–12) and live Q&amp;A demonstration.<br/>
+              Choose an option in the drawer below to replay, jump to Closing, or enter the <strong>Act 2 Quiz Clinic</strong>!
+            </div>
+          `,
+          text: "Awesome job! That tied Meeting 10's minimalist slides, Meeting 11's prepositions and hedging, and Meeting 12's 5-Step Closing & Clarifying Formulas into one seamless pitch. What would you like to do next?",
+          isAct1EndMenu: true
+        }
+      ],
+
+      /* ======================================================================
+         ACT 2: 18-QUESTION INTERACTIVE CLOSING & Q&A CLINIC
+         Part A (10 Qs): 2 per Closing Step (Signal, Summarize, Connect, Action & Limits, Invite)
+         Part B (8 Qs): 2 per Q&A Technique (Vague Qs, Split Two-Part/Stall, Cost/Approval, Label Error/Guarantee)
+         ====================================================================== */
+      quizIndex: 0,
+      quizAnswered: {},
+      quizQuestions: [
+        /* --- PART A: 10 QUESTIONS (2 PER CLOSING STEP) --- */
+        {
+          part: "PART A",
+          stepLabel: "STEP 1: SIGNAL (Q1/2)",
+          badgeClass: "m12",
+          q: "1. After finishing Slide 4's KopiKita sales chart, Maya wants to transition cleanly into her closing. Which opening phrase properly executes Step 1 (Signal)?",
+          options: [
+            { text: "\"That is all from our group, thank you very much.\"", correct: false, reason: "Abrupt ending! Saying 'That is all' stops suddenly without guiding the listener to a decision." },
+            { text: "\"To conclude, /\" (followed by a 1-second breath pause)", correct: true, reason: "Exact! 'To conclude,' plus a 1-second pause signals the end and focuses room attention." },
+            { text: "\"Wait, I forgot to mention two more random store numbers first...\"", correct: false, reason: "Never introduce brand-new unscheduled data points during your closing signal." }
+          ]
+        },
+        {
+          part: "PART A",
+          stepLabel: "STEP 1: SIGNAL (Q2/2)",
+          badgeClass: "m12",
+          q: "2. Why does Maya place a slash breath mark (/) right after 'To conclude,' on her mobile phone teleprompter?",
+          options: [
+            { text: "To remind herself to pause 1 second so the audience registers the transition", correct: true, reason: "Spot on! Slash marks pace spoken delivery naturally and prevent rushed mumbling." },
+            { text: "Because slashes must be read aloud as the word 'slash'", correct: false, reason: "Never read punctuation marks aloud—they are silent breathing cues." }
+          ]
+        },
+        {
+          part: "PART A",
+          stepLabel: "STEP 2: SUMMARIZE (Q1/2)",
+          badgeClass: "m12",
+          q: "3. Which sentence best fulfills Step 2 (Summarize) for the KopiKita Oat Latte pitch without repeating every slide?",
+          options: [
+            { text: "\"KopiKita Oat Latte grew from 180 to 420 bottles across three campus stores, peaking in the afternoon.\"", correct: true, reason: "Accurate, concise, and preserves exact 'from... to...' data without slide-by-slide repetition." },
+            { text: "\"In Slide 1 we said hello, in Slide 2 we talked about lunch, in Slide 3 we talked about chillers, and in Slide 4 we showed 180, 240, 330, and 420.\"", correct: false, reason: "Too repetitive! A summary selects the single core takeaway rather than recapping every slide." }
+          ]
+        },
+        {
+          part: "PART A",
+          stepLabel: "STEP 2: SUMMARIZE (Q2/2)",
+          badgeClass: "m12",
+          q: "4. Which draft violates the rule against introducing new major claims in Step 2 (Summarize)?",
+          options: [
+            { text: "\"Overall, our 4-week pilot showed steady afternoon demand across three campus minimarkets.\"", correct: false, reason: "This is a valid summary of previously presented pilot evidence." },
+            { text: "\"To summarize, KopiKita is also launching a matcha flavor next week that will double national revenue.\"", correct: true, reason: "Correct! Introducing an unmentioned product launch in the closing violates Step 2." }
+          ]
+        },
+        {
+          part: "PART A",
+          stepLabel: "STEP 3: CONNECT (Q1/2)",
+          badgeClass: "m12",
+          q: "5. How does Step 3 (Connect) tailor the KopiKita pilot results specifically to Mr. Hendra (Regional Sales Manager)?",
+          options: [
+            { text: "\"This shows strong afternoon campus demand for our regional retail portfolio.\"", correct: true, reason: "Spot on! Connects the store-level data directly to Mr. Hendra's regional portfolio goals." },
+            { text: "\"This helps our student team get an A in our English presentation class.\"", correct: false, reason: "Speaker-centered! Step 3 must connect the proposal to the decision-maker's business priorities." }
+          ]
+        },
+        {
+          part: "PART A",
+          stepLabel: "STEP 3: CONNECT (Q2/2)",
+          badgeClass: "m12",
+          q: "6. Read this closing draft: 'To conclude, sales rose from 180 to 420 bottles. I recommend a 30-day trial in five stores. Thank you, I welcome questions.' Which closing step is MISSING?",
+          options: [
+            { text: "Step 3: Connect (explaining why the finding matters to the Regional Sales Manager)", correct: true, reason: "Sharp eye! It jumps straight from Step 2 (Summarize) to Step 4 (Action), skipping Step 3 (Connect)." },
+            { text: "Step 5: Invite Q&A", correct: false, reason: "'Thank you, I welcome questions' is already present at the end." }
+          ]
+        },
+        {
+          part: "PART A",
+          stepLabel: "STEP 4: ACTION & LIMITS (Q1/2)",
+          badgeClass: "m12",
+          q: "7. Which recommendation represents a proportionate, evidence-aligned Step 4 (Action) for KopiKita Oat Latte?",
+          options: [
+            { text: "\"I recommend rolling out KopiKita Oat Latte immediately to all 500 regional stores nationwide.\"", correct: false, reason: "Disproportionate overreach! A 3-store, 4-week pilot cannot justify an immediate 500-store rollout." },
+            { text: "\"I recommend a 30-day trial in five campus stores, tracking weekly stock and cold-chain delivery costs.\"", correct: true, reason: "Exact! Bounded, low-risk next step with built-in cost and stock verification." }
+          ]
+        },
+        {
+          part: "PART A",
+          stepLabel: "STEP 4: ACTION & LIMITS (Q2/2)",
+          badgeClass: "m12",
+          q: "8. Why must Maya state 'We have not yet tested a control group or calculated five-store delivery costs' in Step 4?",
+          options: [
+            { text: "To maintain integrity so the reviewer does not mistake a 3-store pilot for proven causation or verified expansion cost", correct: true, reason: "Spot on! Transparent limitation framing builds executive trust and sets up Q&A cleanly." },
+            { text: "To persuade Mr. Hendra to reject the proposal", correct: false, reason: "Stating limitations honestly strengthens a trial proposal rather than undermining it." }
+          ]
+        },
+        {
+          part: "PART A",
+          stepLabel: "STEP 5: INVITE Q&A (Q1/2)",
+          badgeClass: "m12",
+          q: "9. After saying 'Thank you. I welcome your questions.' in Step 5, what should Maya do with the projector screen?",
+          options: [
+            { text: "Turn the screen black or close the presentation file immediately", correct: false, reason: "Never black out the screen! Keep Slide 5 visible as a visual anchor during Q&A." },
+            { text: "Keep Slide 5 (<=15 words) displayed so the committee can reference the 5-store trial ask during Q&A", correct: true, reason: "Correct! Leaving the concise closing slide projected supports clear Q&A discussion." }
+          ]
+        },
+        {
+          part: "PART A",
+          stepLabel: "STEP 5: INVITE Q&A (Q2/2)",
+          badgeClass: "m12",
+          q: "10. How many words should appear on Slide 5 (the projected closing slide) versus Maya's spoken teleprompter script?",
+          options: [
+            { text: "<=15 words on the projected slide; 45–60 words with '/' breath pauses on the mobile teleprompter", correct: true, reason: "Exact! Combines Garr Reynolds' minimalist visual rule with paced mobile teleprompter delivery." },
+            { text: "All 55 words pasted onto Slide 5 in small font so the audience can read along", correct: false, reason: "That creates a 'Slideument'—keep the slide face at <=15 words." }
+          ]
+        },
+
+        /* --- PART B: 8 QUESTIONS (2 PER Q&A TECHNIQUE) --- */
+        {
+          part: "PART B",
+          stepLabel: "Q&A TECH 1: CLARIFY VAGUE Qs (Q1/2)",
+          badgeClass: "qa",
+          q: "11. Mr. Hendra asks: 'Is the afternoon result better?' — Which clarifying formula pinpoints his vague term before you answer?",
+          options: [
+            { text: "\"Do you mean afternoon share of bottle sales (62%) or net profit margin per bottle?\"", correct: true, reason: "Formula 1 ('Do you mean [X] or [Y]?') resolves vague scope cleanly before you answer." },
+            { text: "\"Yes, it is definitely better in every single way!\"", correct: false, reason: "Never guess what a vague adjective means—clarify the two possible meanings first." }
+          ]
+        },
+        {
+          part: "PART B",
+          stepLabel: "Q&A TECH 1: CLARIFY VAGUE Qs (Q2/2)",
+          badgeClass: "qa",
+          q: "12. A skeptical listener says: 'Students only bought it because of hot weather—this pilot proves nothing!' How do you apply Formula 2?",
+          options: [
+            { text: "\"If I understand correctly, you are asking whether external factors like weather explain the sales increase.\"", correct: true, reason: "Formula 2 ('If I understand correctly, you are asking about...') neutralizes emotional/skeptical tone." },
+            { text: "\"That is completely false—weather had zero effect on cold drinks!\"", correct: false, reason: "Defensive and unverified! Without a control group, you cannot rule out weather." }
+          ]
+        },
+        {
+          part: "PART B",
+          stepLabel: "Q&A TECH 2: SPLIT & STALL (Q1/2)",
+          badgeClass: "qa",
+          q: "13. Mr. Hendra asks a rapid two-part question: 'How did you track the 1–5 PM sales window, and which five stores are in the next trial?' What is your best opening move?",
+          options: [
+            { text: "\"I will answer the first part about POS timestamp tracking, then the second part about the five campus stores.\"", correct: true, reason: "Formula 4 ('I will answer the first part, then the second.') organizes compound questions calmly." },
+            { text: "Answer only the store list and hope he forgets the first question.", correct: false, reason: "Skipping half of a reviewer's question hurts credibility. Split and answer both parts." }
+          ]
+        },
+        {
+          part: "PART B",
+          stepLabel: "Q&A TECH 2: SPLIT & STALL (Q2/2)",
+          badgeClass: "qa",
+          q: "14. A reviewer speaks quickly with a dense multi-clause question and you need 3–5 seconds to compose your thoughts. Which formula buys thinking time professionally?",
+          options: [
+            { text: "\"Could you repeat the last part, please?\"", correct: true, reason: "Formula 3 ('Could you repeat the last part, please?') legitimately buys 3–5 seconds to breathe and structure." },
+            { text: "\"Uhh... I don't know, ask Sinta instead.\"", correct: false, reason: "Avoid panicking or deflecting abruptly—use Formula 3 to gain composure." }
+          ]
+        },
+        {
+          part: "PART B",
+          stepLabel: "Q&A TECH 3: COST & APPROVAL (Q1/2)",
+          badgeClass: "qa",
+          q: "15. Integrity Trap (Uncalculated Cost): Mr. Hendra asks for the exact cold-chain delivery budget for 5 stores, which has not been calculated yet. How do you respond?",
+          options: [
+            { text: "\"We have not calculated 5-store cold-chain delivery costs yet; we will log exact delivery costs weekly during the 30-day trial.\"", correct: true, reason: "Exact! Admits the unknown honestly and ties verification directly to the trial plan." },
+            { text: "\"It will cost roughly Rp 1,500,000 per month.\"", correct: false, reason: "Integrity violation! Never fabricate an unverified cost figure." }
+          ]
+        },
+        {
+          part: "PART B",
+          stepLabel: "Q&A TECH 3: COST & APPROVAL (Q2/2)",
+          badgeClass: "qa",
+          q: "16. Integrity Trap (Assumed Approval): A colleague asks, 'Since regional management already approved the 5-store expansion, when does stock ship?' What should you say?",
+          options: [
+            { text: "\"Approval is currently pending; today's presentation is requesting Mr. Hendra's authorization for a 30-day trial.\"", correct: true, reason: "Spot on! Politely corrects the false premise and respects the decision-maker's authority." },
+            { text: "\"Yes, it is approved, so we start shipping Monday morning.\"", correct: false, reason: "Never claim ungranted approval!" }
+          ]
+        },
+        {
+          part: "PART B",
+          stepLabel: "Q&A TECH 4: LABEL ERROR & GUARANTEE (Q1/2)",
+          badgeClass: "qa",
+          q: "17. Integrity Trap (Genuine Label Error): A reviewer notes, 'Your draft handout says 180 to 420 bottles is a 133-percentage-point increase, but that's 133 percent (240 bottles)!' How do you reply?",
+          options: [
+            { text: "\"Thank you for catching that unit error. It is an increase of 240 bottles, or 133 percent—I will correct the handout.\"", correct: true, reason: "Model integrity! Thanking the listener and fixing a genuine unit error earns full rubric credit." },
+            { text: "\"Percent and percentage points mean the same thing in sales reports.\"", correct: false, reason: "Incorrect and defensive! Always acknowledge and correct genuine label/unit mistakes." }
+          ]
+        },
+        {
+          part: "PART B",
+          stepLabel: "Q&A TECH 4: LABEL ERROR & GUARANTEE (Q2/2)",
+          badgeClass: "qa",
+          q: "18. Integrity Trap (Unrealistic Guarantee): Mr. Hendra challenges, 'Can you guarantee all 5 campus stores will hit 420 bottles per week in the 30-day trial?' How do you respond?",
+          options: [
+            { text: "\"We cannot guarantee 420 bottles per store because foot traffic and store conditions vary; the 30-day trial will measure actual demand.\"", correct: true, reason: "Spot on! Declines an unrealistic guarantee and anchors expectations in the 30-day evaluation." },
+            { text: "\"Yes, I 100% guarantee every single store will exceed 420 bottles by Week 2.\"", correct: false, reason: "Dangerous overpromise! Future store performance cannot be guaranteed before testing." }
+          ]
+        }
+      ],
+
+      /* ======================================================================
+         ACT 3: LIVE BOSS Q&A DEFENSE WITH MR. HENDRA (3 ROUNDS)
+         ====================================================================== */
+      defenseIndex: 0,
+      defenseScript: [
+        {
+          speaker: "Mr. Hendra",
+          stepTag: "ACT 3: BOSS Q&A ROUND 1 / 3",
+          badgeClass: "qa",
+          spriteLeft: "images/char_maya_speaking.webp",
+          spriteRight: "images/char_hendra_probing.webp",
+          activeSide: "right",
+          cardTitle: "ROUND 1 • TWO-PART TRAP: UNCALCULATED COST + ASSUMED APPROVAL",
+          cardHtml: `
+            <div style="font-size:11px; line-height:1.45;">
+              <strong style="color:#fbbf24;">Mr. Hendra's Challenge:</strong> Two-part question testing <strong>Formula 4 (Split)</strong>, <strong>Uncalculated Cold-Chain Cost</strong>, and <strong>Assumed Approval</strong>.<br/>
+              Select Maya's best response in the drawer below!
+            </div>
+          `,
+          text: "Maya, Sinta. Your KopiKita Oat Latte pilot grew from 180 to 420 bottles. Two questions before I sign off: what is the exact cold-chain delivery cost for five stores, and is this expansion already approved by campus operations?",
+          choices: [
+            {
+              label: "Split & Answer Honestly (Formula 4 + Limits)",
+              speechText: "I will answer the delivery cost first, then approval status. We have not yet calculated five-store cold-chain delivery costs; we will log those exact costs weekly during the 30-day trial. Second, approval is pending—we are requesting your authorization for the trial today.",
+              isCorrect: true,
+              nextIndex: 1
+            },
+            {
+              label: "Estimate Cost & Claim Pre-Approval",
+              speechText: "Cold-chain delivery will cost about Rp 2,000,000 a month, and yes, campus operations already approved it so we can launch tomorrow!",
+              isCorrect: false,
+              feedback: "Mr. Hendra frowns: 'Never invent uncalculated delivery costs or claim ungranted approval! Split the two parts and state what is verified versus pending.'"
+            }
+          ]
+        },
+        {
+          speaker: "Mr. Hendra",
+          stepTag: "ACT 3: BOSS Q&A ROUND 2 / 3",
+          badgeClass: "qa",
+          spriteLeft: "images/char_maya_speaking.webp",
+          spriteRight: "images/char_hendra_serious.webp",
+          activeSide: "right",
+          cardTitle: "ROUND 2 • LABEL ERROR + UNREALISTIC GUARANTEE TRAP",
+          cardHtml: `
+            <div style="font-size:11px; line-height:1.45;">
+              <strong style="color:#fbbf24;">Mr. Hendra's Challenge:</strong> Testing <strong>Genuine Unit/Label Error</strong> (240 bottles / +133%, not +133 percentage points) AND <strong>Unrealistic Sales Guarantee</strong>.
+            </div>
+          `,
+          text: "Good. Next: your backup note wrote '+133 percentage points' instead of '+133 percent (240 bottles)'. Also, if I approve five stores, can you guarantee every store will hit 420 bottles per week?",
+          choices: [
+            {
+              label: "Thank & Correct Label + Decline Guarantee",
+              speechText: "Thank you for catching that unit error—it is an increase of 240 bottles, or 133 percent, and I will correct the note. Also, we cannot guarantee 420 bottles per store because foot traffic varies; that is why we propose a 30-day trial to evaluate actual store performance.",
+              isCorrect: true,
+              nextIndex: 2
+            },
+            {
+              label: "Dismiss Error & Guarantee 420 Bottles",
+              speechText: "133 percentage points is basically the same thing! And yes, I 100% guarantee every store will reach at least 420 bottles a week.",
+              isCorrect: false,
+              feedback: "Mr. Hendra shakes his head: 'Acknowledge genuine unit errors politely, and never promise unmeasured sales guarantees across new stores!'"
+            }
+          ]
+        },
+        {
+          speaker: "Mr. Hendra",
+          stepTag: "ACT 3: BOSS Q&A ROUND 3 / 3",
+          badgeClass: "qa",
+          spriteLeft: "images/char_maya_speaking.webp",
+          spriteRight: "images/char_hendra_serious.webp",
+          activeSide: "right",
+          cardTitle: "ROUND 3 • SKEPTICAL REMARK + CORRELATION VS. CAUSATION",
+          cardHtml: `
+            <div style="font-size:11px; line-height:1.45;">
+              <strong style="color:#fbbf24;">Mr. Hendra's Challenge:</strong> Testing <strong>Formula 2 (Rephrase Skepticism)</strong> + <strong>Evidence Limits</strong> (3 stores, no control group).
+            </div>
+          `,
+          text: "One final challenge: three campus stores is a small sample, and mid-semester exam stress might explain why students bought more oat lattes. Doesn't that weaken your entire pitch?",
+          choices: [
+            {
+              label: "Rephrase Calmly (Formula 2) & Hedge Causation",
+              speechText: "If I understand correctly, you are asking whether external factors like exam week drove the sales rise. Because our 3-store pilot had no control group, we cannot prove placement alone caused the growth—which is exactly why a controlled 30-day trial in five stores is the right next step.",
+              isCorrect: true,
+              nextIndex: 3
+            },
+            {
+              label: "Claim Proven Causation",
+              speechText: "Not at all! Growing from 180 to 420 bottles proves 100% that our cooler placement caused every single sale.",
+              isCorrect: false,
+              feedback: "Mr. Hendra crosses his arms: 'Correlation is not causation! Without a control group, you must hedge external factors honestly.'"
+            }
+          ]
+        },
+        {
+          speaker: "Mr. Hendra",
+          stepTag: "CAPSTONE CLEARED • APPROVED!",
+          badgeClass: "m10",
+          spriteLeft: "images/char_maya_victory.webp",
+          spriteRight: "images/char_hendra_approve.webp",
+          activeSide: "right",
+          cardTitle: "REGIONAL MANAGER VERDICT: 30-DAY TRIAL APPROVED!",
+          cardHtml: `
+            <div style="font-size:11.5px; line-height:1.45; color:#d1fae5;">
+              <strong>Sub-CPMK 3.1 Capstone Mastered!</strong><br/>
+              &bull; Minimalist 5-Slide Pitch + Accurate Data Prepositions (<em>from, to, of</em>)<br/>
+              &bull; 5-Step Closing + All 4 Clarifying Formulas &amp; Integrity Rules<br/>
+              Open your <strong>Phone Teleprompter Cue-Card</strong> &amp; export <strong>Artifact #3.3 (.doc)</strong>!
+            </div>
+          `,
+          text: "Impressive composure, Maya and Sinta. You kept your slides clean, used exact prepositions, split compound questions, admitted uncalculated delivery costs, corrected a unit error, and hedged causation. Your 30-day KopiKita trial in five campus stores is approved!",
+          choices: [
+            {
+              label: "OPEN PHONE TELEPROMPTER & EXPORT ARTIFACT #3.3 >>",
+              isCorrect: true,
+              isDefenseClear: true
+            }
+          ]
+        }
+      ],
+
+      init() {
+        this.loadSavedProgression();
+      },
+
+      /* AUDIO ENGINE WITH SAFE ONERROR FALLBACK */
+      playBgm(trackPath, volume = 0.24) {
+        if (!this.isBgmEnabled) return;
+        const bgm = document.getElementById("audio-bgm");
+        if (!bgm) return;
+        if (this.currentBgmTrack === trackPath && !bgm.paused) return;
+
+        this.currentBgmTrack = trackPath;
+        bgm.src = trackPath;
+        bgm.volume = volume;
+        bgm.onerror = () => {};
+        bgm.play().catch(() => {});
+      },
+
+      toggleBgm() {
+        this.isBgmEnabled = !this.isBgmEnabled;
+        const btn = document.getElementById("btn-toggle-bgm");
+        const bgm = document.getElementById("audio-bgm");
+
+        if (this.isBgmEnabled) {
+          btn.innerText = "🎵 BGM: ON";
+          btn.style.color = "#fff";
+          if (this.currentBgmTrack && bgm) {
+            bgm.volume = 0.24;
+            bgm.play().catch(() => {});
+          }
+        } else {
+          btn.innerText = "🔇 BGM: OFF";
+          btn.style.color = "#94a3b8";
+          if (bgm) bgm.pause();
+        }
+      },
+
+      playVoice(primaryPath) {
+        const voice = document.getElementById("audio-voice");
+        const bgm = document.getElementById("audio-bgm");
+        if (!voice || !primaryPath) return;
+
+        voice.pause();
+        voice.currentTime = 0;
+
+        if (this.isBgmEnabled && bgm && !bgm.paused) {
+          bgm.volume = 0.08;
+        }
+
+        const restoreBgm = () => {
+          if (this.isBgmEnabled && bgm && !bgm.paused) {
+            bgm.volume = 0.24;
+          }
+        };
+
+        voice.src = primaryPath;
+        voice.onerror = () => {
+          let fallbackPath = '';
+          if (primaryPath.endsWith('.wav')) fallbackPath = primaryPath.replace('.wav', '.mp3');
+          else if (primaryPath.endsWith('.mp3')) fallbackPath = primaryPath.replace('.mp3', '.wav');
+          if (fallbackPath) {
+            voice.src = fallbackPath;
+            voice.onerror = restoreBgm;
+            voice.play().then(() => { voice.onended = restoreBgm; }).catch(restoreBgm);
+          } else {
+            restoreBgm();
+          }
+        };
+        voice.play().then(() => { voice.onended = restoreBgm; }).catch(restoreBgm);
+      },
+
+      playModelClosing(stepNum) {
+        const audioMap = {
+          1: "audio/vo_close_step1.wav",
+          2: "audio/vo_close_step2.wav",
+          3: "audio/vo_close_step3.wav",
+          4: "audio/vo_close_step4.wav",
+          5: "audio/vo_close_step5.wav"
+        };
+        this.playVoice(audioMap[stepNum]);
+      },
+
+      playRandomReaction(isCorrect) {
+        const correctPool = [
+          "audio/vo_sinta_correct_01.mp3",
+          "audio/vo_sinta_correct_02.mp3",
+          "audio/vo_maya_correct_01.mp3",
+          "audio/vo_maya_correct_02.mp3"
+        ];
+        const wrongPool = [
+          "audio/vo_sinta_wrong_01.mp3",
+          "audio/vo_sinta_wrong_02.mp3",
+          "audio/vo_maya_wrong_01.mp3",
+          "audio/vo_maya_wrong_02.mp3"
+        ];
+        const targetPool = isCorrect ? correctPool : wrongPool;
+        const selected = targetPool[Math.floor(Math.random() * targetPool.length)];
+        this.playVoice(selected);
+      },
+
+      stopVoice() {
+        const voice = document.getElementById("audio-voice");
+        if (voice) {
+          voice.pause();
+          voice.currentTime = 0;
+        }
+      },
+
+      fadeTransition(callback) {
+        const overlay = document.getElementById("rpg-fade-overlay");
+        overlay.classList.add("blackout");
+        setTimeout(() => {
+          callback();
+          setTimeout(() => overlay.classList.remove("blackout"), 280);
+        }, 320);
+      },
+
+      switchScreen(screenId) {
+        this.stopVoice();
+        document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+        const target = document.getElementById(screenId);
+        if (target) target.classList.add("active");
+
+        const hubBtn = document.getElementById("btn-return-hub");
+        if (screenId === 'screen-title' || screenId === 'screen-splash' || screenId === 'screen-register') {
+          hubBtn.style.display = "none";
+        } else {
+          hubBtn.style.display = "block";
+        }
+      },
+
+      initializeExperience() {
+        this.fadeTransition(() => {
+          this.playBgm('audio/bgm_title_ver2.mp3', 0.24);
+          this.switchScreen('screen-title');
+        });
+      },
+
+      showRegister() {
+        this.switchScreen('screen-register');
+      },
+
+      confirmRegistration() {
+        const nameInput = document.getElementById("reg-student-name").value.trim();
+        const classInput = document.getElementById("reg-student-class").value.trim();
+
+        this.studentProfile = {
+          name: nameInput || "Student Presenter",
+          classId: classInput || "EOP Meeting 12 (Week 13)"
+        };
+
+        this.unlockedStates = { act1Cleared: false, act2Cleared: false, act3Cleared: false };
+        this.quizAnswered = {};
+        this.saveGameState();
+
+        this.fadeTransition(() => this.openHub());
+      },
+
+      openHub() {
+        this.stopVoice();
+        this.playBgm('audio/bgm_office_ver2.mp3', 0.22);
+        this.updateHubUI();
+        this.switchScreen('screen-hub');
+      },
+
+      updateHubUI() {
+        document.getElementById("hub-candidate-display").innerText =
+          `PRESENTER: ${this.studentProfile.name.toUpperCase()} (${this.studentProfile.classId})`;
+
+        const act1Status = document.getElementById("hub-status-act1");
+        if (this.unlockedStates.act1Cleared) {
+          act1Status.innerText = "✔ CLEARED (REPLAYABLE)";
+          act1Status.style.color = "#34d399";
+        }
+
+        const act2 = document.getElementById("hub-card-act2");
+        const act2Status = document.getElementById("hub-status-act2");
+        if (this.unlockedStates.act1Cleared) {
+          act2.classList.remove("locked");
+          act2Status.innerText = this.unlockedStates.act2Cleared ? "✔ CLEARED (18/18)" : "● AUTHORIZED";
+          act2Status.style.color = this.unlockedStates.act2Cleared ? "#34d399" : "#60a5fa";
+        }
+
+        const act3 = document.getElementById("hub-card-act3");
+        const act3Status = document.getElementById("hub-status-act3");
+        if (this.unlockedStates.act2Cleared) {
+          act3.classList.remove("locked");
+          act3Status.innerText = this.unlockedStates.act3Cleared ? "✔ CLEARED" : "● AUTHORIZED";
+          act3Status.style.color = this.unlockedStates.act3Cleared ? "#34d399" : "#c084fc";
+        }
+
+        const prompter = document.getElementById("hub-card-prompter");
+        const prompterStatus = document.getElementById("hub-status-prompter");
+        if (this.unlockedStates.act3Cleared) {
+          prompter.classList.remove("locked");
+          prompterStatus.innerText = "● UNLOCKED & READY";
+          prompterStatus.style.color = "#10b981";
+        }
+
+        let cleared = 0;
+        if (this.unlockedStates.act1Cleared) cleared++;
+        if (this.unlockedStates.act2Cleared) cleared++;
+        if (this.unlockedStates.act3Cleared) cleared++;
+        document.getElementById("hub-progress-indicator").innerText = `PROGRESS: ${cleared} / 3 ACTS CLEARED`;
+      },
+
+      selectLocation(loc) {
+        if (loc === 'act1') {
+          this.fadeTransition(() => this.launchAct1VN());
+        } else if (loc === 'act2') {
+          if (!this.unlockedStates.act1Cleared) return;
+          this.fadeTransition(() => this.launchAct2Quiz());
+        } else if (loc === 'act3') {
+          if (!this.unlockedStates.act2Cleared) return;
+          this.fadeTransition(() => this.launchAct3Defense());
+        } else if (loc === 'prompter') {
+          if (!this.unlockedStates.act3Cleared) return;
+          this.fadeTransition(() => this.openTeleprompterScreen());
+        }
+      },
+
+      returnToHub() {
+        this.openHub();
+      },
+
+      quitToTitle() {
+        this.playBgm('audio/bgm_title_ver2.mp3', 0.24);
+        this.switchScreen('screen-title');
+      },
+
+      /* ======================================================================
+         ACT 1: COMPLETE 5-SLIDE PRESENTATION SHOWCASE + LIVE Q&A DEMO
+         ====================================================================== */
+      launchAct1VN() {
+        this.currentMode = 'act1_vn';
+        this.scriptIndex = 0;
+        this.playBgm('audio/bgm_office_ver2.mp3', 0.22);
+        document.getElementById("game-bg").style.backgroundImage = "url('images/bg_lecture_hall_podium.webp')";
+        document.getElementById("hud-location-tag").innerText = "ACT 1: 5-SLIDE CAPSTONE PITCH";
+        this.switchScreen('screen-game');
+        this.renderAct1Beat();
+      },
+
+      jumpToClosingInAct1() {
+        if (this.currentMode !== 'act1_vn') return;
+        // Index 6 is Step 1: Signal of Slide 5 Closing
+        this.scriptIndex = 6;
+        this.renderAct1Beat();
+      },
+
+      renderAct1Beat() {
+        if (this.scriptIndex >= this.act1Script.length) {
+          this.scriptIndex = this.act1Script.length - 1;
+        }
+
+        const beat = this.act1Script[this.scriptIndex];
+        document.getElementById("diag-speaker").innerText = beat.speaker.toUpperCase();
+        document.getElementById("diag-body").innerText = beat.text;
+        document.getElementById("diag-beat-counter").innerText = `${this.scriptIndex + 1} / ${this.act1Script.length}`;
+
+        const diagTag = document.getElementById("diag-step-badge");
+        diagTag.innerText = beat.stepTag;
+        diagTag.className = `step-tag-badge ${beat.badgeClass || 'm10'}`;
+
+        const prevBtn = document.getElementById("btn-prev-beat");
+        if (prevBtn) prevBtn.style.visibility = this.scriptIndex > 0 ? "visible" : "hidden";
+
+        const jumpBtn = document.getElementById("btn-jump-closing");
+        if (jumpBtn) jumpBtn.style.visibility = (this.scriptIndex < 6) ? "visible" : "hidden";
+
+        const sLeft = document.getElementById("sprite-left");
+        const sRight = document.getElementById("sprite-right");
+        sLeft.src = beat.spriteLeft;
+        sRight.src = beat.spriteRight;
+        sLeft.classList.remove("hidden");
+        sRight.classList.remove("hidden");
+
+        if (beat.activeSide === 'left') {
+          sLeft.classList.add("active");
+          sLeft.classList.remove("inactive");
+          sRight.classList.add("inactive");
+          sRight.classList.remove("active");
+        } else {
+          sRight.classList.add("active");
+          sRight.classList.remove("inactive");
+          sLeft.classList.add("inactive");
+          sLeft.classList.remove("active");
+        }
+
+        const projFrame = document.getElementById("stage-projector-frame");
+        if (beat.cardHtml) {
+          projFrame.style.display = "block";
+          document.getElementById("stage-card-title").innerText = beat.cardTitle;
+          const stageTag = document.getElementById("stage-step-badge");
+          stageTag.innerText = beat.stepTag;
+          stageTag.className = `step-tag-badge ${beat.badgeClass || 'm10'}`;
+          document.getElementById("stage-card-body").innerHTML = beat.cardHtml;
+        } else {
+          projFrame.style.display = "none";
+        }
+
+        const card = document.getElementById("vn-dialogue-card");
+        const choices = document.getElementById("diag-choices-pane");
+        const promptEl = document.getElementById("diag-prompt");
+        choices.innerHTML = "";
+
+        if (beat.isAct1EndMenu) {
+          this.unlockedStates.act1Cleared = true;
+          this.saveGameState();
+          card.classList.remove("single-pane");
+          promptEl.innerText = "SELECT AN ACTION ON THE RIGHT >>";
+
+          const btnStartQuiz = document.createElement("button");
+          btnStartQuiz.className = "choice-btn gold-choice";
+          btnStartQuiz.innerText = "▶ START ACT 2 QUIZ CLINIC (18 QUESTIONS) >>";
+          btnStartQuiz.onclick = (e) => {
+            e.stopPropagation();
+            this.fadeTransition(() => this.launchAct2Quiz());
+          };
+
+          const btnJumpClosing = document.createElement("button");
+          btnJumpClosing.className = "choice-btn";
+          btnJumpClosing.innerText = "⏩ JUMP TO CLOSING (SLIDE 5: STEP 1 SIGNAL)";
+          btnJumpClosing.onclick = (e) => {
+            e.stopPropagation();
+            this.jumpToClosingInAct1();
+          };
+
+          const btnReplay = document.createElement("button");
+          btnReplay.className = "choice-btn";
+          btnReplay.innerText = "🔄 REPLAY FULL PRESENTATION (SLIDE 1 HOOK)";
+          btnReplay.onclick = (e) => {
+            e.stopPropagation();
+            this.scriptIndex = 0;
+            this.renderAct1Beat();
+          };
+
+          choices.appendChild(btnStartQuiz);
+          choices.appendChild(btnJumpClosing);
+          choices.appendChild(btnReplay);
+        } else {
+          card.classList.add("single-pane");
+          promptEl.innerText = "TAP DIALOGUE TO CONTINUE >>";
+        }
+      },
+
+      handleDialogueAdvance() {
+        if (this.currentMode === 'act1_vn') {
+          if (this.scriptIndex < this.act1Script.length - 1) {
+            this.scriptIndex++;
+            this.renderAct1Beat();
+          }
+        }
+      },
+
+      handleDialogueBack() {
+        if (this.currentMode === 'act1_vn' && this.scriptIndex > 0) {
+          this.scriptIndex--;
+          this.renderAct1Beat();
+        }
+      },
+
+      /* ======================================================================
+         ACT 2: 18-QUESTION CLOSING & Q&A QUIZ CLINIC
+         ====================================================================== */
+      launchAct2Quiz() {
+        this.currentMode = 'act2_quiz';
+        this.quizIndex = 0;
+        document.getElementById("stage-projector-frame").style.display = "none";
+        document.getElementById("hud-location-tag").innerText = "ACT 2: CLOSING & Q&A QUIZ CLINIC";
+        this.switchScreen('screen-act2-quiz');
+        this.renderQuizQuestion();
+      },
+
+      jumpQuizIndex(idx) {
+        this.quizIndex = idx;
+        this.renderQuizQuestion();
+      },
+
+      renderQuizQuestion() {
+        const total = this.quizQuestions.length;
+        const item = this.quizQuestions[this.quizIndex];
+
+        const isPartA = this.quizIndex < 10;
+        document.getElementById("tab-part-a").classList.toggle("active", isPartA);
+        document.getElementById("tab-part-b").classList.toggle("active", !isPartA);
+        document.getElementById("quiz-main-heading").innerText = isPartA
+          ? "Part A: The 5-Step Closing Sequence (Questions 1–10)"
+          : "Part B: 4 Q&A Techniques & Integrity Traps (Questions 11–18)";
+
+        document.getElementById("quiz-q-counter").innerText = `${item.part} • QUESTION ${this.quizIndex + 1} / ${total}`;
+        const badge = document.getElementById("quiz-skill-tag");
+        badge.innerText = item.stepLabel;
+        badge.className = `step-tag-badge ${item.badgeClass}`;
+
+        document.getElementById("quiz-q-text").innerText = item.q;
+
+        const correctCount = Object.values(this.quizAnswered).filter(Boolean).length;
+        document.getElementById("quiz-score-badge").innerText = `SCORE: ${correctCount} / ${total}`;
+
+        const prevBtn = document.getElementById("btn-quiz-prev");
+        prevBtn.style.visibility = this.quizIndex > 0 ? "visible" : "hidden";
+
+        const pane = document.getElementById("quiz-options-pane");
+        pane.innerHTML = "";
+        const fb = document.getElementById("quiz-feedback");
+        const nextBtn = document.getElementById("btn-quiz-next");
+
+        if (this.quizAnswered[this.quizIndex]) {
+          const correctOpt = item.options.find(o => o.correct);
+          fb.style.display = "block";
+          fb.style.background = "rgba(16, 185, 129, 0.22)";
+          fb.style.color = "#34d399";
+          fb.innerText = `✅ CLEARED: ${correctOpt.reason}`;
+          nextBtn.style.display = "block";
+          nextBtn.innerText = (this.quizIndex === total - 1) ? "PROCEED TO ACT 3 BOSS DEFENSE >>" : "NEXT QUESTION >>";
+        } else {
+          fb.style.display = "none";
+          nextBtn.style.display = "none";
+        }
+
+        item.options.forEach(opt => {
+          const btn = document.createElement("button");
+          btn.className = "choice-btn";
+          btn.innerText = opt.text;
+          btn.onclick = () => this.handleQuizAnswer(opt);
+          pane.appendChild(btn);
+        });
+      },
+
+      handleQuizAnswer(opt) {
+        const fb = document.getElementById("quiz-feedback");
+        const nextBtn = document.getElementById("btn-quiz-next");
+        const total = this.quizQuestions.length;
+        fb.style.display = "block";
+
+        if (opt.correct) {
+          this.quizAnswered[this.quizIndex] = true;
+          const correctCount = Object.values(this.quizAnswered).filter(Boolean).length;
+          document.getElementById("quiz-score-badge").innerText = `SCORE: ${correctCount} / ${total}`;
+
+          fb.style.background = "rgba(16, 185, 129, 0.25)";
+          fb.style.color = "#34d399";
+          fb.innerText = `✅ EXACT: ${opt.reason}`;
+          this.playRandomReaction(true);
+
+          nextBtn.innerText = (this.quizIndex === total - 1) ? "PROCEED TO ACT 3 BOSS DEFENSE >>" : "NEXT QUESTION >>";
+          nextBtn.style.display = "block";
+        } else {
+          fb.style.background = "rgba(239, 68, 68, 0.25)";
+          fb.style.color = "#f87171";
+          fb.innerText = `❌ TRY AGAIN: ${opt.reason}`;
+          this.playRandomReaction(false);
+        }
+      },
+
+      prevQuizQuestion() {
+        if (this.quizIndex > 0) {
+          this.quizIndex--;
+          this.renderQuizQuestion();
+        }
+      },
+
+      advanceQuizQuestion() {
+        if (this.quizIndex < this.quizQuestions.length - 1) {
+          this.quizIndex++;
+          this.renderQuizQuestion();
+        } else {
+          this.unlockedStates.act2Cleared = true;
+          this.saveGameState();
+          this.fadeTransition(() => this.launchAct3Defense());
+        }
+      },
+
+      /* ======================================================================
+         ACT 3: LIVE BOSS Q&A DEFENSE WITH MR. HENDRA
+         ====================================================================== */
+      launchAct3Defense() {
+        this.currentMode = 'act3_defense';
+        this.defenseIndex = 0;
+        this.playBgm('audio/bgm_defense_ver2.mp3', 0.24);
+        document.getElementById("game-bg").style.backgroundImage = "url('images/bg_meeting_room.webp')";
+        document.getElementById("hud-location-tag").innerText = "ACT 3: MR. HENDRA BOSS Q&A DEFENSE";
+        this.switchScreen('screen-game');
+        this.renderDefenseBeat();
+      },
+
+      renderDefenseBeat() {
+        const beat = this.defenseScript[this.defenseIndex];
+        document.getElementById("diag-speaker").innerText = beat.speaker.toUpperCase();
+        document.getElementById("diag-body").innerText = `"${beat.text}"`;
+        document.getElementById("diag-beat-counter").innerText = `STAGE ${this.defenseIndex + 1} / ${this.defenseScript.length}`;
+
+        const diagTag = document.getElementById("diag-step-badge");
+        diagTag.innerText = beat.stepTag;
+        diagTag.className = `step-tag-badge ${beat.badgeClass || 'qa'}`;
+
+        const prevBtn = document.getElementById("btn-prev-beat");
+        if (prevBtn) prevBtn.style.visibility = "hidden";
+        const jumpBtn = document.getElementById("btn-jump-closing");
+        if (jumpBtn) jumpBtn.style.visibility = "hidden";
+
+        const sLeft = document.getElementById("sprite-left");
+        const sRight = document.getElementById("sprite-right");
+        sLeft.src = beat.spriteLeft;
+        sRight.src = beat.spriteRight;
+        sLeft.classList.remove("hidden");
+        sRight.classList.remove("hidden");
+
+        if (beat.activeSide === 'right') {
+          sRight.classList.add("active");
+          sRight.classList.remove("inactive");
+          sLeft.classList.add("inactive");
+          sLeft.classList.remove("active");
+        } else {
+          sLeft.classList.add("active");
+          sLeft.classList.remove("inactive");
+          sRight.classList.add("inactive");
+          sRight.classList.remove("active");
+        }
+
+        const projFrame = document.getElementById("stage-projector-frame");
+        if (beat.cardHtml) {
+          projFrame.style.display = "block";
+          document.getElementById("stage-card-title").innerText = beat.cardTitle;
+          const stageTag = document.getElementById("stage-step-badge");
+          stageTag.innerText = beat.stepTag;
+          stageTag.className = `step-tag-badge ${beat.badgeClass || 'qa'}`;
+          document.getElementById("stage-card-body").innerHTML = beat.cardHtml;
+        } else {
+          projFrame.style.display = "none";
+        }
+
+        const card = document.getElementById("vn-dialogue-card");
+        const choices = document.getElementById("diag-choices-pane");
+        const promptEl = document.getElementById("diag-prompt");
+        choices.innerHTML = "";
+        card.classList.remove("single-pane");
+        promptEl.innerText = "CHOOSE MAYA'S RESPONSE >>";
+
+        beat.choices.forEach(ch => {
+          const btn = document.createElement("button");
+          btn.className = ch.isDefenseClear ? "choice-btn gold-choice" : "choice-btn";
+          if (ch.isDefenseClear) {
+            btn.innerHTML = `<strong>${ch.label}</strong>`;
+          } else {
+            btn.innerHTML = `<strong>${ch.label}</strong><br><small style="opacity:0.88;">${ch.speechText.substring(0, 68)}...</small>`;
+          }
+          btn.onclick = (e) => {
+            e.stopPropagation();
+            this.handleDefenseAnswer(ch);
+          };
+          choices.appendChild(btn);
+        });
+      },
+
+      handleDefenseAnswer(choice) {
+        if (!choice.isCorrect) {
+          this.playRandomReaction(false);
+          alert(choice.feedback);
+          return;
+        }
+
+        if (choice.isDefenseClear) {
+          this.completeDefenseSuccess();
+          return;
+        }
+
+        this.playRandomReaction(true);
+
+        document.getElementById("diag-speaker").innerText = "MAYA (DEFENDING)";
+        document.getElementById("diag-body").innerText = `"${choice.speechText}"`;
+        document.getElementById("diag-prompt").innerText = "CLICK CONTINUE FOR MR. HENDRA'S REPLY >>";
+
+        const sLeft = document.getElementById("sprite-left");
+        const sRight = document.getElementById("sprite-right");
+        sLeft.src = "images/char_maya_teleprompter.webp";
+        sLeft.classList.add("active");
+        sLeft.classList.remove("inactive");
+        sRight.classList.add("inactive");
+        sRight.classList.remove("active");
+
+        const choices = document.getElementById("diag-choices-pane");
+        choices.innerHTML = "";
+
+        const proceedBtn = document.createElement("button");
+        proceedBtn.className = "choice-btn gold-choice";
+        proceedBtn.innerText = "CONTINUE TO NEXT Q&A ROUND >>";
+        proceedBtn.onclick = (e) => {
+          e.stopPropagation();
+          this.defenseIndex = choice.nextIndex;
+          this.renderDefenseBeat();
+        };
+        choices.appendChild(proceedBtn);
+      },
+
+      completeDefenseSuccess() {
+        this.unlockedStates.act3Cleared = true;
+        this.saveGameState();
+        this.playBgm('audio/bgm_victory_ver2.mp3', 0.25);
+        this.openTeleprompterScreen();
+      },
+
+      openTeleprompterScreen() {
+        document.getElementById("stage-projector-frame").style.display = "none";
+        document.getElementById("hud-location-tag").innerText = "CAPSTONE TELEPROMPTER & ARTIFACT #3.3";
+        this.switchScreen('screen-teleprompter');
+      },
+
+      /* ======================================================================
+         ARTIFACT #3.3 WORD (.DOC) CAPSTONE PORTFOLIO EXPORTER
+         ====================================================================== */
+      exportArtifactDoc() {
+        const timestamp = new Date().toLocaleString("en-US");
+        const safeName = this.studentProfile.name.replace(/\s+/g, '_');
+        const filename = `Artifact_3_3_${safeName}_KopiKita_Capstone_Portfolio.doc`;
+
+        const docContent = `﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset='utf-8'><title>Artifact #3.3 Sub-CPMK 3.1 Capstone Portfolio</title>
+<style>
+  body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; color: #0f172a; line-height: 1.5; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+  th, td { border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top; }
+  th { background-color: #1e3a8a; color: white; text-align: left; }
+</style>
+</head>
+<body>
+  <h2>UNIVERSITAS PANCASILA &bull; ENGLISH FOR OCCUPATIONAL PURPOSES (EOP)</h2>
+  <h3>Artifact #3.3: Sub-CPMK 3.1 Capstone Presentation &amp; Q&amp;A Defense Portfolio (Meeting 12 / Week 13)</h3>
+  <p>Submission Timestamp: ${timestamp}</p>
+  <table>
+    <tr><th>FIELD</th><th>CAPSTONE DETAILS</th></tr>
+    <tr><td><strong>Presenter Name &amp; NIM:</strong></td><td>${this.studentProfile.name}</td></tr>
+    <tr><td><strong>Cohort / Class Group:</strong></td><td>${this.studentProfile.classId}</td></tr>
+    <tr><td><strong>Capstone Case Scenario:</strong></td><td>KopiKita Oat Latte — 4-Week Campus Minimarket Sales Pilot</td></tr>
+    <tr><td><strong>Reviewer / Decision-Maker:</strong></td><td>Mr. Hendra (Regional Sales Manager)</td></tr>
+    <tr><td><strong>Projected Slide 5 (&le;15 words):</strong></td><td>Approve 30-Day KopiKita Trial in 5 Campus Stores (Weekly Stock &amp; Delivery Cost Tracking)</td></tr>
+  </table>
+
+  <h3>1. UNIFIED 5-SLIDE GARR REYNOLDS DECK ARCHITECTURE (MEETINGS 10–12)</h3>
+  <table>
+    <tr><th>Slide</th><th>Course Block</th><th>Minimalist Billboard Headline (&le;15 Words)</th><th>Key Signpost / Preposition</th></tr>
+    <tr><td><strong>Slide 1</strong></td><td>Meeting 10</td><td>Capturing Afternoon Campus Coffee Demand: 4-Week Pilot &amp; 5-Store Expansion</td><td><em>"Today, I am presenting..."</em></td></tr>
+    <tr><td><strong>Slide 2</strong></td><td>Meeting 10</td><td>Afternoon Student Demand Remains Underserved (1:00–5:00 PM Traffic)</td><td><em>"First, let's look at..."</em></td></tr>
+    <tr><td><strong>Slide 3</strong></td><td>Meeting 10</td><td>Targeted Chilled Placement in 3 Campus Minimarkets</td><td><em>"Moving on to our pilot solution..."</em></td></tr>
+    <tr><td><strong>Slide 4</strong></td><td>Meeting 11</td><td>Weekly Sales Grew From 180 to 420 Bottles (+133%; 62% Sold 1–5 PM)</td><td>Prepositions: <em>from, to, of</em> + Hedging</td></tr>
+    <tr><td><strong>Slide 5</strong></td><td>Meeting 12</td><td>Approve 30-Day KopiKita Trial in 5 Campus Stores</td><td>5-Step Closing Sequence</td></tr>
+  </table>
+
+  <h3>2. 5-STEP SPOKEN CLOSING SCRIPT (54 WORDS WITH '/' BREATH PAUSES)</h3>
+  <p><strong>[1. Signal]</strong> "To conclude, / <br/>
+  <strong>[2. Summarize]</strong> KopiKita Oat Latte grew from 180 to 420 bottles across three campus stores, peaking in the afternoon. / <br/>
+  <strong>[3. Connect]</strong> This shows strong afternoon campus demand for our regional retail portfolio. / <br/>
+  <strong>[4. Action &amp; Honest Limitation]</strong> I recommend a 30-day trial in five campus stores, tracking weekly stock and cold-chain delivery costs. We have not yet tested a control group or calculated five-store delivery costs. / <br/>
+  <strong>[5. Invite Q&amp;A]</strong> Thank you. / I welcome your questions."</p>
+
+  <h3>3. Q&amp;A DEFENSE MATRIX (4 CLARIFYING FORMULAS &amp; 4 INTEGRITY TRAPS)</h3>
+  <table>
+    <tr><th>Q&amp;A Challenge / Trap</th><th>Clarifying Formula Applied</th><th>Grounded Integrity Response</th></tr>
+    <tr><td><strong>Vague Scope + Two-Part Q</strong><br/>("Is afternoon better, and what is 5-store delivery cost?")</td><td><em>"I will answer the first part, then the second."</em> &amp; <em>"Do you mean [X] or [Y]?"</em></td><td>Clarify share of volume (62% sold 1–5 PM) vs. margin; admit 5-store cold-chain delivery cost is uncalculated and will be logged weekly in the 30-day trial.</td></tr>
+    <tr><td><strong>Assumed Approval</strong><br/>("Is expansion already approved?")</td><td><em>"If I understand correctly, you are asking about..."</em></td><td>Clarify that expansion approval is pending Mr. Hendra's decision on the 30-day trial today.</td></tr>
+    <tr><td><strong>Genuine Unit/Label Error</strong><br/>("+133 percentage points" typo)</td><td>Direct accountability</td><td>Thank the reviewer for noticing, clarify that 180 to 420 is +240 bottles (+133 percent), and update the slide/note.</td></tr>
+    <tr><td><strong>Unrealistic Guarantee &amp; Causation</strong><br/>("Guarantee 420 bottles per store?")</td><td><em>"Could you repeat the last part, please?"</em> (3–5s pause)</td><td>Decline guarantees because foot traffic varies and no control group was used; evaluate actual store demand in the 30-day trial.</td></tr>
+  </table>
+
+  <h3>4. CAPSTONE REFLECTION &amp; BOUNDED AI DISCLOSURE</h3>
+  <p>Preparing this capstone taught me how minimalist visual design (Meeting 10), exact prepositional data commentary (Meeting 11), and structured closing plus Q&amp;A integrity (Meeting 12) work together in a single business pitch. Instead of guessing uncalculated cold-chain delivery costs or promising guaranteed bottle sales across five stores, using clarifying formulas allowed me to pause, rephrase skeptical questions, and defend a realistic 30-day trial honestly.</p>
+</body>
+</html>`;
+
+        const blob = new Blob([docContent], { type: "application/msword;charset=utf-8" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+      },
+
+      /* SAVE & LOAD PROGRESSION */
+      saveGameState() {
+        const state = {
+          profile: this.studentProfile,
+          unlocked: this.unlockedStates,
+          quizAnswered: this.quizAnswered
+        };
+        localStorage.setItem("EOP_WEEK13_M12_CAPSTONE_V1", JSON.stringify(state));
+      },
+
+      loadSavedProgression() {
+        const raw = localStorage.getItem("EOP_WEEK13_M12_CAPSTONE_V1");
+        const contBtn = document.getElementById("btn-continue-save");
+        if (!contBtn) return;
+        if (raw) {
+          contBtn.style.opacity = "1";
+          contBtn.style.pointerEvents = "auto";
+        } else {
+          contBtn.style.opacity = "0.45";
+          contBtn.style.pointerEvents = "none";
+        }
+      },
+
+      loadSavedGame() {
+        const raw = localStorage.getItem("EOP_WEEK13_M12_CAPSTONE_V1");
+        if (!raw) return;
+        const state = JSON.parse(raw);
+        this.studentProfile = state.profile || { name: "Student Presenter", classId: "EOP Week 13" };
+        this.unlockedStates = state.unlocked || { act1Cleared: false, act2Cleared: false, act3Cleared: false };
+        this.quizAnswered = state.quizAnswered || {};
+        this.openHub();
+      }
+    };
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const splash = document.getElementById('screen-splash');
+        if (splash && splash.classList.contains('active')) {
+          e.preventDefault();
+          app.initializeExperience();
+          return;
+        }
+        const gameScreen = document.getElementById('screen-game');
+        if (gameScreen && gameScreen.classList.contains('active') && app.currentMode === 'act1_vn') {
+          e.preventDefault();
+          app.handleDialogueAdvance();
+          return;
+        }
+      }
+    });
+
+    window.onload = () => app.init();
+  </script>
+</body>
+</html>
